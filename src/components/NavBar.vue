@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia'
 import { useTokenStore, useUserDataStore } from '../stores';
 import { router } from '../routes';
 const userStore = useUserDataStore();

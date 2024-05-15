@@ -2,11 +2,12 @@ import type { AxiosInstance, CreateAxiosDefaults } from "axios"
 import axios from "axios";
 import { storeToRefs } from "pinia";
 import { useTokenStore } from "../stores/tokenStore";
+import { baseConfig } from "./config";
 
 export class ApiInstance {
     private __instance: AxiosInstance;
 
-    constructor (config: CreateAxiosDefaults) {
+    constructor (config: CreateAxiosDefaults = baseConfig) {
         this.__instance = axios.create(config);
         this.__instance.interceptors.request.use((request) => {
             const tokenStore = useTokenStore();
