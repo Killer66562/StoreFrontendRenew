@@ -42,7 +42,8 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: "store",
-                component: () => import('../views/UserStorePage.vue')
+                component: () => import('../views/UserStorePage.vue'),
+                props: true
             },
             /*
             {

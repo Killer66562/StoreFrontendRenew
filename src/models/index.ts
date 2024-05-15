@@ -68,3 +68,7 @@ export interface CommentSchema extends BaseSchema, CUCommentSchema {
     user_id: string,
     item_id: string
 }
+
+export interface FullCommentSchema extends CommentSchema {
+    user: UserSchema
+}
