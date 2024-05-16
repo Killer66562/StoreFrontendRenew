@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useTokenStore, useUserDataStore } from '../stores';
 import { router } from '../routes';
+import LoginCheck from '../components/LoginCheck.vue';
 const userStore = useUserDataStore();
 const tokenStore = useTokenStore();
 const { userData } = storeToRefs(userStore);
@@ -24,7 +25,7 @@ userStore.fetchUserData();
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <template v-if="userData">
+                    <LoginCheck>
                         <li class="nav-item">
                             <RouterLink to="/user/buy-next-time-items" class="nav-link active text-center">
                                 <img class="nav-brand" src="../assets/heart.png" alt="願望清單" height="24" width="24">
@@ -45,12 +46,14 @@ userStore.fetchUserData();
                                 <img class="nav-brand" src="../assets/store.png" alt="我的商店" height="24" width="24">
                             </RouterLink>
                         </li>
-                    </template>
-                    <li class="nav-item nav-link" v-else>登入以使用使用者相關功能</li>
-                    <li class="nav-item nav-link active" v-if="userData">您好，{{ userData?.username }}！</li>
+                    </LoginCheck>
                     <li class="nav-item">
-                        <RouterLink class="nav-link active text-center" to="/login" v-if="!userData">註冊｜登入</RouterLink>
-                        <RouterLink to="/" class="nav-link active text-center" v-else @click="logout">登出</RouterLink>
+                        <LoginCheck>
+                            <RouterLink to="/" class="nav-link active text-center" @click="logout">登出</RouterLink>
+                            <template #notLogin>
+                                <RouterLink class="nav-link active text-center" to="/login">註冊｜登入</RouterLink>
+                            </template>
+                        </LoginCheck>
                     </li>
                 </ul>
             </div>

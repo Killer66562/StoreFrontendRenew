@@ -1,14 +1,19 @@
 <script setup lang="ts">
+import LoginCheck from '../components/LoginCheck.vue';
 import StoreInfo from '../components/StoreInfo.vue';
 import { useUserStoreStore } from '../stores/userStoreStore';
+import { router } from '../routes';
 const userStoreStore = useUserStoreStore();
+const gotoLoginPage = async () => {
+    await router.replace("/login");
+}
 </script>
 
 <template>
-    <template v-if="userStoreStore.userStore === undefined">
-        <h3 class="text-center">你還沒創建商店喔</h3>
-    </template>
-    <template v-else>
-        <StoreInfo :store="userStoreStore.userStore" />
-    </template>
+    <LoginCheck @not-login="gotoLoginPage">
+        <template #default>
+            <StoreInfo :store="userStoreStore.userStore" />
+        </template>
+        <template #notLogin>Test</template>
+    </LoginCheck>
 </template>
