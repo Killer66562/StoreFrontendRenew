@@ -57,7 +57,8 @@ export interface CUItemSchema {
 }
 
 export interface ItemSchema extends BaseSchema, CUItemSchema {
-    store_id: number
+    store_id: number,
+    icon: string | null
 }
 
 export interface CUCommentSchema {

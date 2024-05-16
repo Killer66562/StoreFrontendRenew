@@ -28,11 +28,11 @@ const routes: RouteRecordRaw[] = [
             }
         ]
     },
+    */
     {
         path: "/register",
-        component: () => import('../views/RegisterPageView.vue')
+        component: () => import('../views/RegisterPage.vue')
     },
-    */
     {
         path: "/login",
         component: () => import('../views/LoginPage.vue')

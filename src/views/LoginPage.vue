@@ -12,12 +12,14 @@ const data = ref<LoginSchema>({
     password: ""
 });
 const sendData = async () => {
+    const toast = useToast();
     try {
         await userDataStore.login(data.value);
+        await router.replace("/");
+        toast.success("登入成功！")
     }
     catch (err) {
-        const toast = useToast();
-        toast.error("登入失敗，帳號或密碼錯誤。", { position: "bottom" });
+        toast.error("登入失敗，帳號或密碼錯誤。");
         throw err;
     }
 }
