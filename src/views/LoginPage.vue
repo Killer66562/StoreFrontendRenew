@@ -6,6 +6,8 @@ import { ref } from 'vue';
 import { useAsyncState } from '@vueuse/core';
 import { useUserDataStore } from '../stores';
 import { useToast } from 'vue-toast-notification';
+import { useRootStore } from '../stores/rootStore';
+const rootStore = useRootStore();
 const userDataStore = useUserDataStore();
 const data = ref<LoginSchema>({
     username: "",
@@ -15,8 +17,9 @@ const sendData = async () => {
     const toast = useToast();
     try {
         await userDataStore.login(data.value);
+        await (await rootStore.initState).execute();
+        toast.success("登入成功！");
         await router.replace("/");
-        toast.success("登入成功！")
     }
     catch (err) {
         toast.error("登入失敗，帳號或密碼錯誤。");
@@ -30,11 +33,14 @@ const resetData = () => {
         password: ""
     }
 }
+const onIsLogin = async () => {
+    console.log("You login");
+    await router.replace('/');
+}
 </script>
 
 <template>
-    <LoginCheck @is-login="router.back()">
-        <template #default></template>
+    <LoginCheck @is-login="onIsLogin">
         <template #notLogin>
             <h2 class="text-center mb-3">登入</h2>
             <div class="row">

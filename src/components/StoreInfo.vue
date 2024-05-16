@@ -26,4 +26,10 @@ defineProps<{
             </div>
         </div>
     </div>
+    <template v-else>
+        <h2 class="text-center">你還沒有創建商店喔！</h2>
+        <div class="text-center">
+            <RouterLink to="/">點我創建商店</RouterLink>
+        </div>
+    </template>
 </template>

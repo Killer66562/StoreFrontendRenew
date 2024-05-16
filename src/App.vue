@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import NavBar from './components/NavBar.vue'
 import { router } from './routes';
+import { useRootStore } from './stores/rootStore';
+
+const rootStore = useRootStore();
+rootStore.initState.execute();
 </script>
 
 <template>

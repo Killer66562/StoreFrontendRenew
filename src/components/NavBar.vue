@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useTokenStore, useUserDataStore } from '../stores';
 import { router } from '../routes';
 import LoginCheck from '../components/LoginCheck.vue';
 const userStore = useUserDataStore();
 const tokenStore = useTokenStore();
-const { userData } = storeToRefs(userStore);
 const logout = async () => {
     tokenStore.logout();
     await router.replace("/login");

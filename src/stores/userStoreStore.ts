@@ -1,44 +1,30 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { CUStoreSchema, StoreSchema } from "../models";
-import { ApiInstance, baseConfig } from "../api";
+import { ApiInstance } from "../api";
 
 export const useUserStoreStore = defineStore("userStore", () => {
-    const editableData = ref<CUStoreSchema>();
-    const userStore = ref<StoreSchema>();
-    const fetchUserStore = async () => {
-        resetUserStore();
-        const apiInstance = new ApiInstance(baseConfig);
+    const userStoreData = ref<StoreSchema>();
+    const fetchData = async () => {
+        const apiInstance = new ApiInstance();
+        userStoreData.value = await apiInstance.get("/user/store");
+    }
+    const resetData = () => {
+        userStoreData.value = undefined;
+    }
+    const createStore = async (data: CUStoreSchema, icon: File | null) => {
+        const apiInstance = new ApiInstance();
+        await apiInstance.post("/user/store", data);
+        if (icon !== null) {
+            try {
+                await apiInstance.putForm("/user/store/icon", icon);
+            }
+            catch (err) {}
+        }
         try {
-            userStore.value = await apiInstance.get("/user/store");
+            await fetchData();
         }
-        catch (err) {
-            throw err;
-        }
-        finally {
-            if (userStore.value === undefined) {
-                editableData.value = {
-                    name: "",
-                    introduction: ""
-                }
-            }
-            else {
-                editableData.value = {...userStore.value};
-            }
-        }
+        catch (err) {}
     }
-    const resetUserStore = async () => {
-        editableData.value = undefined;
-        userStore.value = undefined;
-    }
-    const sendEditableData = async () => {
-        const apiInstance = new ApiInstance(baseConfig);
-        if (editableData.value === undefined)
-            throw new Error();
-        else {
-            await apiInstance.put("/user/store", editableData.value);
-            await fetchUserStore();
-        }
-    }
-    return { editableData, userStore, fetchUserStore, resetUserStore, sendEditableData }
+    return { userStoreData, fetchData, resetData, createStore }
 });
