@@ -73,3 +73,10 @@ export interface CommentSchema extends BaseSchema, CUCommentSchema {
 export interface FullCommentSchema extends CommentSchema {
     user: UserSchema
 }
+
+export interface PageSchema<T> {
+    data: T[],
+    page: number,
+    pages: number,
+    size: number
+}

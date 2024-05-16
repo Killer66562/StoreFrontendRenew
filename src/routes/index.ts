@@ -69,7 +69,6 @@ const routes: RouteRecordRaw[] = [
             */
         ]
     },
-    /*
     {
         path: "/admin",
         children: [
@@ -77,13 +76,18 @@ const routes: RouteRecordRaw[] = [
                 path: "cities",
                 component: () => import('../views/AdminCityPage.vue')
             },
+            /*
             {
                 path: "districts",
                 component: () => import('../views/AdminDistrictPage.vue')
             }
+            */
         ]
+    },
+    {
+        path: "/404",
+        component: () => import('../views/NotFoundPage.vue')
     }
-    */
 ];
 
 const options: RouterOptions = {

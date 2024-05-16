@@ -2,7 +2,6 @@
 import TriState from './TriState.vue';
 import { useUserDataStore } from '../stores';
 import { useRootStore } from '../stores/rootStore';
-import { onBeforeMount } from 'vue';
 
 const rootStore = useRootStore();
 const userDataStore = useUserDataStore();
@@ -14,32 +13,24 @@ const emits = defineEmits<{
 }>();
 
 const onReady = () => {
-    emits("ready");
     if (userDataStore.userData)
         emits("isLogin");
     else
         emits("notLogin");
 }
 
-const onError = () => {
-    emits("notLogin");
+const handler = () => {
+    if (rootStore.isReady)
+        onReady();
+    else if (rootStore.error)
+        emits("notLogin");
 }
 
-onBeforeMount(() => {
-    if (rootStore.isReady) {
-        if (userDataStore.userData)
-            emits("isLogin");
-        else
-            emits("notLogin");
-    }
-
-    if (rootStore.error)
-        emits("notLogin");
-});
+handler();
 </script>
 
 <template>
-    <TriState :loading="rootStore.isLoading" :ready="rootStore.isReady" :error="rootStore.error" @ready="onReady" @error="onError">
+    <TriState :loading="rootStore.isLoading" :ready="rootStore.isReady" :error="rootStore.error" @ready="onReady" @error="emits('notLogin')">
         <template #loading></template>
         <template #ready>
             <slot name="notLogin" v-if="!userDataStore.userData"></slot>

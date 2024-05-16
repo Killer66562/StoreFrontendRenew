@@ -2,10 +2,13 @@
 import { useTokenStore, useUserDataStore } from '../stores';
 import { router } from '../routes';
 import LoginCheck from '../components/LoginCheck.vue';
+import { useToast } from 'vue-toast-notification';
+const toast = useToast();
 const userStore = useUserDataStore();
 const tokenStore = useTokenStore();
 const logout = async () => {
     tokenStore.logout();
+    toast.success("登出成功！");
     await router.replace("/login");
 }
 userStore.fetchUserData();

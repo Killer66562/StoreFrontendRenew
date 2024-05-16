@@ -12,17 +12,13 @@ const notAdminCB = () => {
     toast.error("你不是管理員");
 }
 
-const isLoginCB = () => {
-    toast.success("你登入了");
-}
-
 const notLoginCB = () => {
     toast.error("你沒登入");
 }
 </script>
 
 <template>
-    <AdminCheck @isAdmin="isAdminCB" @notAdmin="notAdminCB" @isLogin="isLoginCB" @notLogin="notLoginCB">
+    <AdminCheck @isAdmin="isAdminCB" @notAdmin="notAdminCB" @notLogin="notLoginCB">
         <template>
             <h2>Hello</h2>
         </template>
