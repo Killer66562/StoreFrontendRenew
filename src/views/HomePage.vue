@@ -19,9 +19,7 @@ const notLoginCB = () => {
 
 <template>
     <AdminCheck @isAdmin="isAdminCB" @notAdmin="notAdminCB" @notLogin="notLoginCB">
-        <template>
-            <h2>Hello</h2>
-        </template>
+        <h2>Hello</h2>
         <template #notAdmin>
             <h2 class="text-center">你不是管理員</h2>
         </template>

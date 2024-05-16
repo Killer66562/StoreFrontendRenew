@@ -25,7 +25,7 @@ const onIsLogin = () => {
 <template>
     <LoginCheck @is-login="onIsLogin" @not-login="emits('notLogin')">
         <slot name="notLogin" v-if="!userData"></slot>
-        <slot name="notAdmin" v-else-if="userData.is_admin"></slot>
+        <slot name="notAdmin" v-else-if="!userData.is_admin"></slot>
         <slot></slot>
     </LoginCheck>
 </template>
