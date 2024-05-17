@@ -80,3 +80,7 @@ export interface PageSchema<T> {
     pages: number,
     size: number
 }
+
+export interface FullDistrictSchema extends DistrictSchema {
+    city: CitySchema
+}

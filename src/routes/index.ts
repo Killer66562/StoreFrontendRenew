@@ -76,12 +76,10 @@ const routes: RouteRecordRaw[] = [
                 path: "cities",
                 component: () => import('../views/AdminCityPage.vue')
             },
-            /*
             {
                 path: "districts",
                 component: () => import('../views/AdminDistrictPage.vue')
             }
-            */
         ]
     },
     {

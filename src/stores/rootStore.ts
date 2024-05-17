@@ -4,12 +4,14 @@ import { useUserStoreStore } from "./userStoreStore";
 import { useAsyncState } from "@vueuse/core";
 import { useTokenStore } from "./tokenStore";
 import { useCitiesStore } from "./citiesStore";
+import { useDistrictsStore } from "./districtsStore";
 
 export const useRootStore = defineStore("rootStore", () => {
     const tokenStore = useTokenStore();
     const userDataStore = useUserDataStore();
     const userStoreStore = useUserStoreStore();
     const citiesStore = useCitiesStore();
+    const districtsStore = useDistrictsStore();
 
     const init = async () => {
         try {
@@ -20,11 +22,15 @@ export const useRootStore = defineStore("rootStore", () => {
         }
         try {
             await Promise.all([
-                userStoreStore.fetchData(),
-                citiesStore.fetchData()
+                citiesStore.fetchData(),
+                districtsStore.fetchData()
             ]);
         }
         catch (err) { throw err; }
+        try {
+            await userStoreStore.fetchData();
+        }
+        catch (err) {}
     }
 
     const initState = useAsyncState(() => init(), undefined, { immediate: false });
