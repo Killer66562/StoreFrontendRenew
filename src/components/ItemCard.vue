@@ -11,7 +11,7 @@ defineProps<{
     <RouterLink class="text-decoration-none" :to="`/items/${item.id}`">
         <div class="card">
             <div class="card-body">
-                <img :src="getStaticFile(item.icon)" class="card-img-top" :alt="`商品#${item.id}`" v-if="item.icon">
+                <img :src="getStaticFile(item.icon)" class="card-img-top mb-3" :alt="`商品#${item.id}`" v-if="item.icon">
                 <img src="/src/assets/item.jpg" class="card-img-top" :alt="`商品#${item.id}`" v-else>
                 <h5 class="card-title">{{ item.name }}</h5>
                 <p class="card-text text-truncate">{{ item.introduction }}</p>
