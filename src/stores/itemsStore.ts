@@ -27,7 +27,7 @@ export const useItemsStore = defineStore("itemsStore", () => {
         const apiInstance = new ApiInstance();
         if (page.value < pages.value) {
             const paginatedData: PageSchema<ItemSchema> = await apiInstance.get("/general/items", { page: page.value });
-            itemsData.value.push(...paginatedData.data);
+            itemsData.value.push(...paginatedData.items);
             pages.value = paginatedData.pages;
             ++page.value;
         }

@@ -33,7 +33,7 @@ handler();
     <TriState :loading="rootStore.isLoading" :ready="rootStore.isReady" :error="rootStore.error" @ready="onReady" @error="emits('notLogin')">
         <template #loading></template>
         <template #ready>
-            <slot name="notLogin" v-if="!userDataStore.userData"></slot>
+            <slot name="notLogin" v-if="userDataStore.userData === undefined"></slot>
             <slot v-else></slot>
         </template>
         <template #error>

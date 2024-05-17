@@ -75,7 +75,7 @@ export interface FullCommentSchema extends CommentSchema {
 }
 
 export interface PageSchema<T> {
-    data: T[],
+    items: T[],
     page: number,
     pages: number,
     size: number
