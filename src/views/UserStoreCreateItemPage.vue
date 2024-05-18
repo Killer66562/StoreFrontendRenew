@@ -98,6 +98,14 @@ const item = computed<FullItemSchema>(() => {
                     <label class="form-label">商品Icon</label>
                     <input ref="inputRef" class="form-control" type="file" @change="onIconChange">
                 </div>
+                <div class="mb-3">
+                    <label class="form-label">商品價格</label>
+                    <input min="0" class="form-control" type="number" v-model="data.price" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">商品數量</label>
+                    <input min="1" class="form-control" type="number" v-model="data.count" required>
+                </div>
             </div>
             <div class="col-12 col-md-8 mb-3">
                 <label class="form-label">商品介紹</label>

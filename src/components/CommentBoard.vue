@@ -25,7 +25,7 @@ const data = ref<CUCommentSchema>({
 const sendComment = async () => {
     const apiInstance = new ApiInstance();
     try {
-        await apiInstance.put(`/items/${props.item.id}/comments`, data.value);
+        await apiInstance.put(`/general/items/${props.item.id}/comments`, data.value);
         emits("commentsUpudate");
     }
     catch (err) {

@@ -32,7 +32,7 @@ fetchState.execute();
             <template v-if="item">
                 <ItemInfo :item="item"/>
                 <StoreInfo :store="item.store" />
-                <CommentBoard :comments="item.comments" :item="item" />
+                <CommentBoard :comments="item.comments" :item="item" @comments-upudate="fetchItem"/>
             </template>
             <h3 class="text-center" v-else>商品不存在</h3>
         </template>
