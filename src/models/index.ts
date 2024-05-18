@@ -1,6 +1,6 @@
 export interface BaseSchema {
     id: number,
-    created_at: number
+    created_at: Date
 }
 
 export interface LoginSchema {
@@ -41,10 +41,13 @@ export interface DistrictSchema extends BaseSchema, AdminCUDistrictSchema {
 export interface CUStoreSchema {
     name: string,
     introduction: string,
-    district_id?: number
+    district_id?: number,
+    icon: File | null
 }
 
-export interface StoreSchema extends BaseSchema, CUStoreSchema {
+export interface StoreSchema extends BaseSchema {
+    name: string,
+    introduction: string,
     district_id: number,
     icon: string | null
 }
