@@ -4,8 +4,15 @@ import { StoreSchema, CUStoreSchema, FullDistrictSchema } from '../models';
 import { useCitiesStore } from '../stores/citiesStore';
 import { useDistrictsStore } from '../stores/districtsStore';
 import StoreInfo from '../components/StoreInfo.vue';
+import { ApiInstance } from '../api';
+import { useToast } from 'vue-toast-notification';
+import { router } from '../routes';
+import { useUserStoreStore } from '../stores/userStoreStore';
 
 const inputRef = ref<HTMLInputElement>();
+const toast = useToast();
+
+const userStoreStore = useUserStoreStore();
 
 const selectedCityId = ref<number>();
 
@@ -70,11 +77,27 @@ const onIconChange = () => {
             data.value.icon = null;
     }
 }
+
+const sendData = async () => {
+    const apiInstance = new ApiInstance();
+    try {
+        await apiInstance.post("/user/store", data.value);
+        try {
+            await userStoreStore.fetchData();
+        }
+        catch (err) {}
+        await router.replace("/user/store");
+        toast.success("創建成功！");
+    }
+    catch (err) {
+        toast.error("創建失敗。");
+    }
+}
 </script>
 
 <template>
     <h2 class="text-center mb-3">建立商店</h2>
-    <form class="mb-3" @submit="" @reset="resetData">
+    <form class="mb-3" @submit.prevent="sendData" @reset.prevent="resetData">
         <div class="row mb-3">
             <div class="col-12 col-md-4">
                 <div class="mb-3">
