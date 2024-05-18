@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { StoreSchema, CUStoreSchema, CitySchema, FullDistrictSchema } from '../models';
+import { StoreSchema, CUStoreSchema, FullDistrictSchema } from '../models';
 import { useCitiesStore } from '../stores/citiesStore';
 import { useDistrictsStore } from '../stores/districtsStore';
 import StoreInfo from '../components/StoreInfo.vue';
