@@ -57,11 +57,17 @@ export interface CUItemSchema {
     introduction: string,
     count: number,
     price: number,
-    need_18: boolean
+    need_18: boolean,
+    icon: File | null
 }
 
-export interface ItemSchema extends BaseSchema, CUItemSchema {
+export interface ItemSchema extends BaseSchema {
     store_id: number,
+    name: string,
+    introduction: string,
+    count: number,
+    price: number,
+    need_18: boolean,
     icon: string | null
 }
 

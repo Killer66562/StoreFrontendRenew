@@ -66,6 +66,10 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "liked-items",
                 component: () => import('../views/UserLikedItemsPage.vue')
+            },
+            {
+                component: () => import('../views/UserStoreCreateItemPage.vue'),
+                path: "create-item"
             }
         ]
     },
