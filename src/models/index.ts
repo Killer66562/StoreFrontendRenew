@@ -123,7 +123,7 @@ export interface ItemImageSchema extends BaseSchema {
 }
 
 export interface FullItemSchema extends ItemSchema {
-    store: FullStoreSchema,
+    store: StoreSchema,
     images: ItemImageSchema[],
     comments: FullCommentSchema[]
 }

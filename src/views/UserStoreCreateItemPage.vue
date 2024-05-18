@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { CUItemSchema } from '../models';
+import { computed, ref } from 'vue';
+import { CUItemSchema, FullItemSchema} from '../models';
 import { ApiInstance } from '../api';
 import { useToast } from 'vue-toast-notification';
 import { router } from '../routes';
 import { useItemsStore } from '../stores/itemsStore';
+import ItemInfo from '../components/ItemInfo.vue';
 
 const inputRef = ref<HTMLInputElement>();
 const toast = useToast();
@@ -56,6 +57,32 @@ const sendData = async () => {
         toast.error("創建失敗。");
     }
 }
+
+const item = computed<FullItemSchema>(() => {
+    return {
+        id: Infinity,
+        store_id: Infinity,
+        created_at: new Date(),
+        name: "",
+        introduction: "",
+        count: 1,
+        price: 0,
+        need_18: false,
+        icon: null,
+        images: [],
+        comments: [],
+        store: {
+            id: Infinity,
+            name: "",
+            introduction: "",
+            icon: null,
+            district_id: Infinity,
+            created_at: new Date()
+        }
+    }
+});
+
+
 </script>
 
 <template>
@@ -64,7 +91,7 @@ const sendData = async () => {
         <div class="row mb-3">
             <div class="col-12 col-md-4">
                 <div class="mb-3">
-                    <label class="fomr-label">商品名稱</label>
+                    <label class="form-label">商品名稱</label>
                     <input type="text" class="form-control" placeholder="請輸入商品名稱" v-model="data.name" required>
                 </div>
                 <div class="mb-3">
@@ -73,7 +100,7 @@ const sendData = async () => {
                 </div>
             </div>
             <div class="col-12 col-md-8 mb-3">
-                <label class="fomr-label">商品介紹</label>
+                <label class="form-label">商品介紹</label>
                 <textarea type="text" class="form-control h-100" placeholder="請輸入商品介紹" v-model="data.introduction" rows="10"></textarea>
             </div>
         </div>
@@ -84,4 +111,6 @@ const sendData = async () => {
             </div> 
         </div>
     </form>
+    <h3 class="mb-3">商品預覽</h3>
+    <ItemInfo :item="item" :own-link="item.icon"/>
 </template>
