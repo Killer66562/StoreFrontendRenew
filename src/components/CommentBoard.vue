@@ -37,12 +37,12 @@ const sendState = useAsyncState(() => sendComment(), undefined, { immediate: fal
 </script>
 
 <template>
-    <div class="row">
-        <div class="col-2">
+    <div class="row mb-3">
+        <div class="col-1">
             <img class="img-fluid h-100" style="aspect-ratio: 1 /1;" :src="getStaticFile(userDataStore.userData.username)" alt="user-icon" v-if="userDataStore.userData">
             <img class="img-fluid h-100" style="aspect-ratio: 1 /1;" src="/src/assets/user.png" alt="user-icon" v-else>
         </div>
-        <div class="col-10">
+        <div class="col-11">
             <form @submit.prevent="sendState.execute" @reset.prevent="">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="請輸入留言" v-model="data.content">

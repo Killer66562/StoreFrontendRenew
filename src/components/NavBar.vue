@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useTokenStore } from '../stores';
 import { router } from '../routes';
 import LoginCheck from '../components/LoginCheck.vue';
 import { useToast } from 'vue-toast-notification';
-const toast = useToast();
-const tokenStore = useTokenStore();
+import { useRootStore } from '../stores/rootStore';
+const rootStore = useRootStore();
 const logout = async () => {
-    tokenStore.logout();
-    toast.success("登出成功！");
-    await router.replace("/login");
+    rootStore.reset();
+    const toast = useToast();
+    await router.replace("/");
+    toast.success("登出成功");
 }
 </script>
 
@@ -26,8 +26,8 @@ const logout = async () => {
                 <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
                     <LoginCheck>
                         <li class="nav-item">
-                            <RouterLink to="/user/buy-next-time-items" class="nav-link active text-center">
-                                <img class="nav-brand" src="../assets/heart.png" alt="願望清單" height="24" width="24">
+                            <RouterLink to="/user/liked-items" class="nav-link active text-center">
+                                <img class="nav-brand" src="/src/assets/heart.png" alt="願望清單" height="24" width="24">
                             </RouterLink>
                         </li>
                         <li class="nav-item">
@@ -58,4 +58,13 @@ const logout = async () => {
             </div>
         </div>
     </nav>
+    <div class="container-fluid bg-warning pb-1">
+        <div class="container">
+            <div class="input-group mb-3">
+                <span class="input-group-text">全站搜尋</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" placeholder=":)">
+                <button class="btn btn-success" type="button">GO</button>
+            </div>
+        </div>
+    </div>
 </template>

@@ -52,6 +52,7 @@ export interface StoreSchema extends BaseSchema, CUStoreSchema {
 export interface CUItemSchema {
     name: string,
     introduction: string,
+    count: number,
     price: number,
     need_18: boolean
 }
@@ -83,4 +84,37 @@ export interface PageSchema<T> {
 
 export interface FullDistrictSchema extends DistrictSchema {
     city: CitySchema
+}
+
+export interface CULikedItemSchema {
+    item_id: number
+}
+
+export interface CUCartItemSchema extends CULikedItemSchema {
+    count: number
+}
+
+export interface LikedItemSchema extends BaseSchema, CULikedItemSchema {}
+
+export interface FullLikedItemSchema extends LikedItemSchema {
+    item: ItemSchema
+}
+
+export interface FullStoreSchema extends StoreSchema {
+    owner: UserSchema
+}
+
+export interface CUItemImageSchema {
+    image: File
+}
+
+export interface ItemImageSchema extends BaseSchema {
+    item_id: number
+    path: string
+}
+
+export interface FullItemSchema extends ItemSchema {
+    store: FullStoreSchema,
+    images: ItemImageSchema[],
+    comments: FullCommentSchema[]
 }

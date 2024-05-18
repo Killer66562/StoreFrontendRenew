@@ -5,19 +5,19 @@ const routes: RouteRecordRaw[] = [
         path: "/",
         component: () => import('../views/HomePage.vue')
     },
-    /*
-    {
-        path: "/test",
-        component: () => import('../views/TestPage.vue')
-    },
     {
         path: "/items",
         children: [
             {
                 path: ":itemId",
-                component: () => import('../views/ItemDetailView.vue')
+                component: () => import('../views/ItemDetailPage.vue')
             }
         ]
+    },
+    /*
+    {
+        path: "/test",
+        component: () => import('../views/TestPage.vue')
     },
     {
         path: "/stores",
@@ -62,11 +62,11 @@ const routes: RouteRecordRaw[] = [
                 path: "cart-items",
                 component: () => import('../views/UserCartItemsView.vue')
             },
-            {
-                path: "buy-next-time-items",
-                component: () => import('../views/UserBNTItemsPageView.vue')
-            }
             */
+            {
+                path: "liked-items",
+                component: () => import('../views/UserLikedItemsPage.vue')
+            }
         ]
     },
     {

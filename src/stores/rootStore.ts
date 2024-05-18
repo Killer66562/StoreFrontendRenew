@@ -38,7 +38,19 @@ export const useRootStore = defineStore("rootStore", () => {
         catch (err) {}
     }
 
+    const reset = () => {
+        userDataStore.resetUserData();
+        tokenStore.logout();
+        userStoreStore.resetData();
+        citiesStore.resetData();
+        districtsStore.resetData();
+        itemsStore.resetAll();
+        error.value = undefined;
+        isReady.value = true;
+        isLoading.value = false;
+    }
+
     const initState = useAsyncState(() => init(), undefined, { immediate: false });
     const { isLoading, isReady, error } = initState;
-    return { init, initState, isLoading, isReady, error }
+    return { init, initState, isLoading, isReady, error, reset }
 });
