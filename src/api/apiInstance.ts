@@ -1,8 +1,9 @@
-import type { AxiosInstance, CreateAxiosDefaults } from "axios"
+import type { AxiosError, AxiosInstance, CreateAxiosDefaults } from "axios"
 import axios from "axios";
 import { storeToRefs } from "pinia";
 import { useTokenStore } from "../stores/tokenStore";
 import { baseConfig } from "./config";
+import { CustomError } from "../models";
 
 export class ApiInstance {
     private __instance: AxiosInstance;
@@ -18,8 +19,30 @@ export class ApiInstance {
         });
         this.__instance.interceptors.response.use((response) => {
             return Promise.resolve(response.data);
-        }, (err) => {
-            return Promise.reject(err);
+        }, (err: AxiosError) => {
+            if (!err.response)
+                return Promise.reject<CustomError>({message: "發生未知錯誤，請稍後再試。", status: undefined});
+            else if (err.response.status === undefined)
+                return Promise.reject<CustomError>({message: "發生未知錯誤，請稍後再試。", status: undefined});
+            else if (!err.response?.data)
+                return Promise.reject<CustomError>({message: "發生未知錯誤，請稍後再試。", status: undefined});
+            else if (err.response.status >= 500)
+                return Promise.reject<CustomError>({message: "伺服端錯誤，請稍後再試。", status: err.response.status});
+            else {
+                const responseData = (err.response.data as any);
+                if (err.response.status == 422) {
+                    if (!responseData.message)
+                        return Promise.reject<CustomError>({message: "送出的資料格式有誤。", status: err.response.status});
+                    else
+                        return Promise.reject<CustomError>({message: responseData.message, status: err.response.status});
+                }
+                else {
+                    if (!responseData.message)
+                        return Promise.reject<CustomError>({message: "客戶端錯誤，請稍後再試。", status: err.response.status});
+                    else
+                        return Promise.reject<CustomError>({message: responseData.message, status: err.response.status});
+                }
+            }          
         })
     }
 

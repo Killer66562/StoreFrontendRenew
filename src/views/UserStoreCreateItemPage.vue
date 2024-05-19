@@ -6,6 +6,7 @@ import { useToast } from 'vue-toast-notification';
 import { router } from '../routes';
 import { useItemsStore } from '../stores/itemsStore';
 import ItemInfo from '../components/ItemInfo.vue';
+import { getErrorMessage } from '../funcs';
 
 const inputRef = ref<HTMLInputElement>();
 const toast = useToast();
@@ -45,7 +46,11 @@ const onIconChange = () => {
 const sendData = async () => {
     const apiInstance = new ApiInstance();
     try {
-        await apiInstance.post("/user/store/items", data.value);
+        const newItem: FullItemSchema = await apiInstance.post("/user/store/items", data.value);
+        try {
+            await apiInstance.putForm(`/user/store/items/${newItem.id}/icon`, { icon: data.value.icon });
+        }
+        catch (err) {}
         try {
             await useItemStore.fetchItemsData();
         }
@@ -54,21 +59,31 @@ const sendData = async () => {
         toast.success("創建成功！");
     }
     catch (err) {
-        toast.error("創建失敗。");
+        const errMessage = getErrorMessage(err);
+        toast.error(errMessage);
     }
 }
+
+const iconUrl = computed(() => {
+    if (data.value.icon) {
+        const url = URL.createObjectURL(data.value.icon);
+        return url;
+    }
+    else
+        return null
+})
 
 const item = computed<FullItemSchema>(() => {
     return {
         id: Infinity,
         store_id: Infinity,
         created_at: new Date(),
-        name: "",
-        introduction: "",
-        count: 1,
-        price: 0,
-        need_18: false,
-        icon: null,
+        name: data.value.name,
+        introduction: data.value.introduction,
+        count: data.value.count,
+        price: data.value.price,
+        need_18: data.value.need_18,
+        icon: iconUrl.value,
         images: [],
         comments: [],
         store: {
@@ -120,5 +135,5 @@ const item = computed<FullItemSchema>(() => {
         </div>
     </form>
     <h3 class="mb-3">商品預覽</h3>
-    <ItemInfo :item="item" :own-link="item.icon"/>
+    <ItemInfo :item="item" :own-link="item.icon" preview/>
 </template>

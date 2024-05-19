@@ -8,6 +8,7 @@ import { ApiInstance } from '../api';
 import { useToast } from 'vue-toast-notification';
 import { router } from '../routes';
 import { useUserStoreStore } from '../stores/userStoreStore';
+import { getErrorMessage } from '../funcs';
 
 const inputRef = ref<HTMLInputElement>();
 const toast = useToast();
@@ -36,7 +37,6 @@ const data = ref<CUStoreSchema>({
 const iconUrl = computed(() => {
     if (data.value.icon) {
         const url = URL.createObjectURL(data.value.icon);
-        console.log(url);
         return url;
     }
     else
@@ -90,7 +90,8 @@ const sendData = async () => {
         toast.success("創建成功！");
     }
     catch (err) {
-        toast.error("創建失敗。");
+        const errMessage = getErrorMessage(err);
+        toast.error(errMessage);
     }
 }
 </script>

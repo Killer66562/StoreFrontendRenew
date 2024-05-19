@@ -6,6 +6,7 @@ import { ref } from 'vue';
 import { useAsyncState } from '@vueuse/core';
 import { useToast } from 'vue-toast-notification';
 import { ApiInstance } from '../api';
+import { getErrorMessage } from '../funcs';
 const data = ref<RegisterSchema>({
     username: "",
     email: "",
@@ -22,7 +23,8 @@ const sendData = async () => {
         toast.info("已將您重新導向登入頁面。");
     }
     catch (err) {
-        toast.error("註冊失敗，帳號或電子郵件已被使用。");
+        const errMessage = getErrorMessage(err);
+        toast.error(errMessage);
         throw err;
     }
 }

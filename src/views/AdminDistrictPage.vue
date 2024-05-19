@@ -7,6 +7,10 @@ import { useAsyncState } from '@vueuse/core';
 import AdminCheck from '../components/AdminCheck.vue';
 import { router } from '../routes';
 import { useCitiesStore } from '../stores/citiesStore';
+import { getErrorMessage } from '../funcs';
+import { useToast } from 'vue-toast-notification';
+
+const toast = useToast();
 
 const staticData = ref<FullDistrictSchema>();
 const data = ref<AdminCUDistrictSchema>({
@@ -36,10 +40,17 @@ const setData = (dt: FullDistrictSchema) => {
 
 const sendData = async () => {
     const apiInstance = new ApiInstance();
-    if (staticData.value)
-        await apiInstance.put(`/admin/districts/${staticData.value.id}`, data.value);
-    else
-        await apiInstance.post(`/admin/districts`, data.value);
+    try {
+        if (staticData.value)
+            await apiInstance.put(`/admin/districts/${staticData.value.id}`, data.value);
+        else
+            await apiInstance.post(`/admin/districts`, data.value);
+    }
+    catch (err) {
+        const errMessage = getErrorMessage(err);
+        toast.error(errMessage);
+        throw err;
+    }
     resetDataRaw();
     try {
         await districtsStore.fetchData();

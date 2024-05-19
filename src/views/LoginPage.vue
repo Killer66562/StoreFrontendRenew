@@ -7,6 +7,7 @@ import { useAsyncState } from '@vueuse/core';
 import { useUserDataStore } from '../stores';
 import { useToast } from 'vue-toast-notification';
 import { useRootStore } from '../stores/rootStore';
+import { getErrorMessage } from '../funcs';
 const rootStore = useRootStore();
 const userDataStore = useUserDataStore();
 const data = ref<LoginSchema>({
@@ -22,7 +23,8 @@ const sendData = async () => {
         await router.replace("/");
     }
     catch (err) {
-        toast.error("登入失敗，帳號或密碼錯誤。");
+        const errMessage = getErrorMessage(err);
+        toast.error(errMessage);
         throw err;
     }
 }

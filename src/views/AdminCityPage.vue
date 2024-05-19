@@ -6,6 +6,10 @@ import { ApiInstance } from '../api';
 import { useAsyncState } from '@vueuse/core';
 import AdminCheck from '../components/AdminCheck.vue';
 import { router } from '../routes';
+import { useToast } from 'vue-toast-notification';
+import { getErrorMessage } from '../funcs';
+
+const toast = useToast();
 
 const staticData = ref<CitySchema>();
 const data = ref<AdminCUCitySchema>({
@@ -33,10 +37,17 @@ const setData = (dt: CitySchema) => {
 
 const sendData = async () => {
     const apiInstance = new ApiInstance();
-    if (staticData.value)
-        await apiInstance.put(`/admin/cities/${staticData.value.id}`, data.value);
-    else
-        await apiInstance.post(`/admin/cities`, data.value);
+    try {
+        if (staticData.value)
+            await apiInstance.put(`/admin/cities/${staticData.value.id}`, data.value);
+        else
+            await apiInstance.post(`/admin/cities`, data.value);
+    }
+    catch (err) {
+        const errMessage = getErrorMessage(err);
+        toast.error(errMessage);
+        throw err
+    }
     resetDataRaw();
     try {
         await citiesStore.fetchData();
