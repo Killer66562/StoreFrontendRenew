@@ -84,6 +84,7 @@ const addToLikedItems = async () => {
                     <button class="btn btn-outline-danger" type="button" @click="addToCartItems">加入購物車</button>
                     <button class="btn btn-outline-success" type="button" @click="addToLikedItems">加入願望清單</button>
                 </template>
+                <p>{{ item.introduction }}</p>
             </div>
         </div>
     </div>

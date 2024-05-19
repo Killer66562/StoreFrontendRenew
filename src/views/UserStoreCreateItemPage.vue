@@ -7,6 +7,7 @@ import { router } from '../routes';
 import { useItemsStore } from '../stores/itemsStore';
 import ItemInfo from '../components/ItemInfo.vue';
 import { getErrorMessage } from '../funcs';
+import LoginCheck from '../components/LoginCheck.vue';
 
 const inputRef = ref<HTMLInputElement>();
 const toast = useToast();
@@ -97,43 +98,47 @@ const item = computed<FullItemSchema>(() => {
     }
 });
 
-
+const onNotLogin = async () => {
+    await router.replace("/login");
+}
 </script>
 
 <template>
-    <h2 class="text-center mb-3">建立商品</h2>
-    <form class="mb-3" @submit.prevent="sendData" @reset.prevent="resetData">
-        <div class="row mb-3">
-            <div class="col-12 col-md-4">
-                <div class="mb-3">
-                    <label class="form-label">商品名稱</label>
-                    <input type="text" class="form-control" placeholder="請輸入商品名稱" v-model="data.name" required>
+    <LoginCheck @not-login="onNotLogin">
+        <h2 class="text-center mb-3">建立商品</h2>
+        <form class="mb-3" @submit.prevent="sendData" @reset.prevent="resetData">
+            <div class="row mb-3">
+                <div class="col-12 col-md-4">
+                    <div class="mb-3">
+                        <label class="form-label">商品名稱</label>
+                        <input type="text" class="form-control" placeholder="請輸入商品名稱" v-model="data.name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">商品Icon</label>
+                        <input ref="inputRef" class="form-control" type="file" @change="onIconChange">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">商品價格</label>
+                        <input min="0" class="form-control" type="number" v-model="data.price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">商品數量</label>
+                        <input min="1" class="form-control" type="number" v-model="data.count" required>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">商品Icon</label>
-                    <input ref="inputRef" class="form-control" type="file" @change="onIconChange">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">商品價格</label>
-                    <input min="0" class="form-control" type="number" v-model="data.price" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">商品數量</label>
-                    <input min="1" class="form-control" type="number" v-model="data.count" required>
+                <div class="col-12 col-md-8 mb-3">
+                    <label class="form-label">商品介紹</label>
+                    <textarea type="text" class="form-control h-100" placeholder="請輸入商品介紹" v-model="data.introduction" rows="10"></textarea>
                 </div>
             </div>
-            <div class="col-12 col-md-8 mb-3">
-                <label class="form-label">商品介紹</label>
-                <textarea type="text" class="form-control h-100" placeholder="請輸入商品介紹" v-model="data.introduction" rows="10"></textarea>
+            <div class="d-flex flex-row justify-content-center">
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-success">點我創建商品</button>
+                    <button type="reset" class="btn btn-danger">重新填寫</button>
+                </div> 
             </div>
-        </div>
-        <div class="d-flex flex-row justify-content-center">
-            <div class="btn-group">
-                <button type="submit" class="btn btn-success">點我創建商品</button>
-                <button type="reset" class="btn btn-danger">重新填寫</button>
-            </div> 
-        </div>
-    </form>
-    <h3 class="mb-3">商品預覽</h3>
-    <ItemInfo :item="item" :own-link="item.icon" preview/>
+        </form>
+        <h3 class="mb-3">商品預覽</h3>
+        <ItemInfo :item="item" :own-link="item.icon" preview/>
+    </LoginCheck>
 </template>
