@@ -54,15 +54,17 @@ const routes: RouteRecordRaw[] = [
                 path: "orders",
                 component: () => import('../views/UserOrdersPageView.vue')
             },
+            
             {
                 path: "add-item",
                 component: () => import('../views/UserStoreAddItemView.vue')
             },
+            */
             {
                 path: "cart-items",
-                component: () => import('../views/UserCartItemsView.vue')
+                component: () => import('../views/UserCartItemsPage.vue')
             },
-            */
+            
             {
                 path: "liked-items",
                 component: () => import('../views/UserLikedItemsPage.vue')
