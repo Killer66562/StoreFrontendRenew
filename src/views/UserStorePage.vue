@@ -18,7 +18,7 @@ const userStoreStore = useUserStoreStore();
             <template #ready>
                 <template v-if="userStoreStore.userStoreData">
                     <StoreInfo :store="userStoreStore.userStoreData" />
-                    <button type="button" class="btn btn-success">點我上架新商品</button>
+                    <RouterLink to="/user/create-item">點我上架新商品</RouterLink>
                 </template>
                 <template v-else>
                     <h2 class="text-center">你還沒有創建商店喔</h2>
