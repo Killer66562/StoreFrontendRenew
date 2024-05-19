@@ -128,6 +128,13 @@ export interface FullItemSchema extends ItemSchema {
     comments: FullCommentSchema[]
 }
 
+export interface CartItemSchema extends BaseSchema {
+    item_id: number,
+    user_id: number,
+    count: number,
+    item: FullItemSchema
+}
+
 export interface CustomError {
     message: string,
     status?: number
