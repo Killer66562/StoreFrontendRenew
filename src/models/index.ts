@@ -127,3 +127,8 @@ export interface FullItemSchema extends ItemSchema {
     images: ItemImageSchema[],
     comments: FullCommentSchema[]
 }
+
+export interface CustomError {
+    message: string,
+    status?: number
+}
