@@ -49,11 +49,11 @@ const routes: RouteRecordRaw[] = [
                 path: "create-store",
                 component: () => import('../views/UserCreateStorePage.vue')
             },
-            /*
             {
                 path: "orders",
-                component: () => import('../views/UserOrdersPageView.vue')
+                component: () => import('../views/UserOrdersPage.vue')
             },
+            /*
             {
                 path: "add-item",
                 component: () => import('../views/UserStoreAddItemView.vue')

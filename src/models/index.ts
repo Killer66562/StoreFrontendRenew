@@ -132,3 +132,12 @@ export interface CustomError {
     message: string,
     status?: number
 }
+
+export interface OrderSchema {
+    item: ItemSchema,
+    id: number,
+    created_at: Date,
+    item_id: number,
+    user_id: number,
+    count: number
+} 
