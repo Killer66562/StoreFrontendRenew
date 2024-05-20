@@ -10,10 +10,10 @@ defineProps<{
 <template>
         <div class="row bg-light pt-1 pb-1">
             <div class="col-9 col-sm-10 col-md-10">
-                <RouterLink :to="`items/${likedItem.id}`" class="text-decoration-none">
+                <RouterLink :to="`/items/${likedItem.item.id}`" class="text-decoration-none">
                     <div class="row">
                         <div class="col-4 col-sm-3 col-md-2 col-lg-1">
-                            <img class="img-fluid" :src="getStaticFile(likedItem.item.icon)" :alt="`LikedItem #${likedItem.id}`" v-if="likedItem.item.icon" style="aspect-ratio: 1 / 1;">
+                            <img class="img-fluid" :src="getStaticFile(likedItem.item.icon)" :alt="`LikedItem #${likedItem.item.id}`" v-if="likedItem.item.icon" style="aspect-ratio: 1 / 1;">
                             <img class="img-fluid" src="/src/assets/item.jpg" :alt="`LikedItem #${likedItem.id}`" v-else style="aspect-ratio: 1 / 1;">
                         </div>
                         <div class="col-5 col-sm-7 col-md-8 col-lg-9 pt-4">

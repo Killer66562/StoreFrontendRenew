@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ItemSchema } from '../models';
+import { FullItemSchema } from '../models';
 import ItemCard from './ItemCard.vue';
 
 defineProps<{
-    items: ItemSchema[]
+    items: FullItemSchema[]
 }>();
 </script>
 

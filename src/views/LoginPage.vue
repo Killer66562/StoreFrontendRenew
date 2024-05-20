@@ -42,7 +42,7 @@ const onIsLogin = async () => {
 </script>
 
 <template>
-    <LoginCheck @is-login="onIsLogin">
+    <LoginCheck @is-login="onIsLogin" use-own-not-login-handler>
         <template #notLogin>
             <h2 class="text-center mb-3">登入</h2>
             <div class="row">

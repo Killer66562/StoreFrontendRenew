@@ -14,37 +14,33 @@ defineProps<{
 
 <template>
     <LoginCheck>
-        <div class="row bg-light pt-1 pb-1">
-            <div class="col-9 col-sm-10 col-md-11">
+        <div class="row bg-light">
+            <div class="col-sm-auto d-flex align-items-center">
+                <div class="pb-2">
+                    <input type="checkbox" class="form-check-input align-middle" @change="emits('checkedChanged')" />
+                </div>
+            </div>
+            <div class="col-11">
                 <div class="row">
-                    <div class="col-auto pt-3">
-                        <input type="checkbox" @change="emits('checkedChanged')" />
-                    </div>
-                    <div class="col-11">
-                        <RouterLink :to="`items/${cartItem.id}`" class="text-decoration-none">
-                            <div class="row">
-                                <div class="col-4 col-sm-3 col-md-2 col-lg-1">
-                                    <img class="img-fluid" :src="getStaticFile(cartItem.item.icon)" :alt="`LikedItem #${cartItem.id}`" v-if="cartItem.item.icon" style="aspect-ratio: 1 / 1;">
-                                    <img class="img-fluid" src="/src/assets/item.jpg" :alt="`LikedItem #${cartItem.id}`" v-else style="aspect-ratio: 1 / 1;">
-                                </div>
-                                <div class="col-8 col-sm-9 col-md-10 col-lg-11 pt-4">
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <h5 class="text-start text-dark text-truncate">{{ cartItem.item.name }}</h5>
-                                        </div>
-                                        <div class="col-3 text-decoration-none">${{ cartItem.item.price }}</div>
-                                        <div class="col-2 text-end fw-bold text-danger text-truncate">{{ cartItem.count }}</div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="col-4 col-sm-3 col-md-2 col-lg-1">
+                        <RouterLink :to="`/items/${cartItem.item.id}`" class="text-decoration-none">
+                            <img class="img-fluid h-100" :src="getStaticFile(cartItem.item.icon)" :alt="`CartItem #${cartItem.id}`" v-if="cartItem.item.icon" style="aspect-ratio: 1 / 1;">
+                            <img class="img-fluid" src="/src/assets/item.jpg" :alt="`CartItem #${cartItem.id}`" v-else style="aspect-ratio: 1 / 1;">
                         </RouterLink>
+                    </div>
+                    <div class="col-7 col-sm-8 col-md-9 col-lg-10">
+                        <h5>{{ cartItem.item.name }}</h5>
+                        <h6 class="text-danger">${{ cartItem.item.price }}</h6>
+                        <div class="row">
+                            <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+                                <input class="form-control " type="number" v-model="cartItem.count" min="1">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-3 col-sm-2 col-md-1 pt-4">
-                <div class="d-flex flex-row justify-content-end">
-                    <button class="btn btn-danger btn-sm" type="button">刪除</button>
-                </div>
+            <div class="d-flex flex-row flex-fill justify-content-end align-items-center">
+                <button class="btn btn-danger btn-sm" type="button">刪除</button>
             </div>
         </div>
     </LoginCheck>

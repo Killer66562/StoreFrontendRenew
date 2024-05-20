@@ -2,9 +2,14 @@
 import TriState from './TriState.vue';
 import { useUserDataStore } from '../stores';
 import { useRootStore } from '../stores/rootStore';
+import { router } from '../routes';
 
 const rootStore = useRootStore();
 const userDataStore = useUserDataStore();
+
+const props = defineProps<{
+    useOwnNotLoginHandler?: boolean
+}>();
 
 const emits = defineEmits<{
     isLogin: [],
@@ -12,18 +17,30 @@ const emits = defineEmits<{
     ready: []
 }>();
 
-const onReady = () => {
-    if (userDataStore.userData)
-        emits("isLogin");
-    else
-        emits("notLogin");
+const notLoginHandler = async () => {
+    await router.replace("/");
 }
 
-const handler = () => {
+const onReady =  async () => {
+    if (userDataStore.userData)
+        emits("isLogin");
+    else {
+        if (props.useOwnNotLoginHandler === true)
+            emits("notLogin");
+        else
+            await notLoginHandler();
+    }
+}
+
+const handler = async () => {
     if (rootStore.isReady)
         onReady();
-    else if (rootStore.error)
-        emits("notLogin");
+    else if (rootStore.error) {
+        if (props.useOwnNotLoginHandler === true)
+            emits("notLogin");
+        else
+            await notLoginHandler();
+    }
 }
 
 handler();

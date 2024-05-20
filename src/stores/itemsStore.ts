@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
-import { ItemSchema, PageSchema } from "../models";
+import { FullItemSchema, PageSchema } from "../models";
 import { ref } from "vue";
 import { ApiInstance } from "../api";
 
 export const useItemsStore = defineStore("itemsStore", () => {
     const inited = ref<boolean>(false);
-    const hotItems = ref<ItemSchema[]>([]);
-    const bestItems = ref<ItemSchema[]>([]);
-    const likedItems = ref<ItemSchema[]>([]);
-    const itemsData = ref<ItemSchema[]>([]);
+    const hotItems = ref<FullItemSchema[]>([]);
+    const bestItems = ref<FullItemSchema[]>([]);
+    const likedItems = ref<FullItemSchema[]>([]);
+    const itemsData = ref<FullItemSchema[]>([]);
     const page = ref<number>(1);
     const pages = ref<number>(Infinity);
     const fetchHotItems = async () => {
@@ -26,7 +26,7 @@ export const useItemsStore = defineStore("itemsStore", () => {
     const fetchItemsData = async () => {
         const apiInstance = new ApiInstance();
         if (page.value < pages.value) {
-            const paginatedData: PageSchema<ItemSchema> = await apiInstance.get("/general/items", { page: page.value });
+            const paginatedData: PageSchema<FullItemSchema> = await apiInstance.get("/general/items", { page: page.value });
             itemsData.value.push(...paginatedData.items);
             pages.value = paginatedData.pages;
             ++page.value;

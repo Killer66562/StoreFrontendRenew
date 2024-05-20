@@ -6,6 +6,7 @@ import { useTokenStore } from "./tokenStore";
 import { useCitiesStore } from "./citiesStore";
 import { useDistrictsStore } from "./districtsStore";
 import { useItemsStore } from "./itemsStore";
+import { useUserCartItemsStore } from "./userCartItemsStore";
 
 export const useRootStore = defineStore("rootStore", () => {
     const tokenStore = useTokenStore();
@@ -14,6 +15,7 @@ export const useRootStore = defineStore("rootStore", () => {
     const citiesStore = useCitiesStore();
     const districtsStore = useDistrictsStore();
     const itemsStore = useItemsStore();
+    const userCartItemsStore = useUserCartItemsStore();
 
     const init = async () => {
         try {
@@ -24,30 +26,54 @@ export const useRootStore = defineStore("rootStore", () => {
         }
         try {
             await Promise.all([
-                citiesStore.fetchData(),
-                districtsStore.fetchData(),
                 itemsStore.fetchHotItems(),
                 itemsStore.fetchBestItems(),
-                itemsStore.fetchItemsData()
+                itemsStore.fetchItemsData(),
             ]);
         }
-        catch (err) { throw err; }
-        try {
-            await userStoreStore.fetchData();
+        catch (err) {
+            throw err;
         }
-        catch (err) {}
+        if (userDataStore.userData) {
+            try {
+                await Promise.all([
+                    citiesStore.fetchData(),
+                    districtsStore.fetchData(),
+                    userCartItemsStore.fetchCartItems()
+                ]);
+            }
+            catch (err) { throw err; }
+            try {
+                await userStoreStore.fetchData();
+            }
+            catch (err) {}
+        }
     }
 
-    const reset = () => {
+    const reset = async () => {
+        isLoading.value = true;
+
         userDataStore.resetUserData();
         tokenStore.logout();
         userStoreStore.resetData();
         citiesStore.resetData();
         districtsStore.resetData();
         itemsStore.resetAll();
+
+        try {
+            await Promise.all([
+                itemsStore.fetchHotItems(),
+                itemsStore.fetchBestItems(),
+                itemsStore.fetchItemsData(),
+            ]);
+        }
+        catch (err) {}
+
         error.value = undefined;
         isReady.value = true;
-        isLoading.value = false;
+        setTimeout(() => {
+            isLoading.value = false;
+        }, 1000);
     }
 
     const initState = useAsyncState(() => init(), undefined, { immediate: false });

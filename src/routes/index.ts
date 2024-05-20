@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
         children: [
             {
                 path: ":itemId",
-                component: () => import('../views/ItemDetailPage.vue')
+                component: () => import('../views/ItemDetailPage.vue'),
             }
         ]
     },

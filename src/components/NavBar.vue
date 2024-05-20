@@ -24,7 +24,7 @@ const logout = async () => {
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
-                    <LoginCheck>
+                    <LoginCheck use-own-not-login-handler>
                         <li class="nav-item">
                             <RouterLink to="/user/liked-items" class="nav-link active text-center">
                                 <img class="nav-brand" src="/src/assets/heart.png" alt="願望清單" height="24" width="24">
@@ -47,7 +47,7 @@ const logout = async () => {
                         </li>
                     </LoginCheck>
                     <li class="nav-item">
-                        <LoginCheck>
+                        <LoginCheck use-own-not-login-handler>
                             <RouterLink to="/" class="nav-link active text-center" @click="logout">登出</RouterLink>
                             <template #notLogin>
                                 <RouterLink class="nav-link active text-center" to="/login">註冊｜登入</RouterLink>

@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { useUserCartItemsStore } from '../stores/userCartItemsStore';
-import { useInfiniteScroll, useAsyncState } from '@vueuse/core';
+import { useAsyncState } from '@vueuse/core';
 import { computed, ref } from 'vue';
 import CartItemRow from '../components/CartItemRow.vue';
 import TriState from '../components/TriState.vue';
 import LoginCheck from '../components/LoginCheck.vue';
-import { router } from '../routes';
 import { CartItemSchema } from '../models';
 
 const loader = ref();
 const userCartItemsStore = useUserCartItemsStore();
 
-const fetchState = useAsyncState(() => userCartItemsStore.fetchLikedItems(), undefined, { immediate: false });
+const fetchState = useAsyncState(() => userCartItemsStore.fetchCartItems(), undefined, { immediate: false });
 
-useInfiniteScroll(loader, () => fetchState.execute(), { canLoadMore: () => { return userCartItemsStore.canLoadMore && !fetchState.isLoading.value }, interval: 1000 });
-
-const onNotLogin = async () => {
-    await router.replace("/login");
-}
+//useInfiniteScroll(loader, () => fetchState.execute(), { canLoadMore: () => { return userCartItemsStore.canLoadMore && !fetchState.isLoading.value }, interval: 1000 });
 
 const selectedItems = ref<CartItemSchema[]>([]);
 
@@ -32,15 +27,19 @@ const selectedItemsOnChange = (cItem: CartItemSchema) => {
 const totalPrice = computed<number>(() => {
     let total = 0;
     selectedItems.value.forEach((cartItem) => {
-        total += cartItem.item.price;
+        total += (cartItem.item.price * cartItem.count);
     });
     return total;
 });
 </script>
 
 <template>
-    <LoginCheck @not-login="onNotLogin">
-        <div class="container" ref="loader">
+    <LoginCheck>
+        <div class="container bg-light" ref="loader">
+            <div class="d-flex flex-row flex-fill">
+                <input class="form-check-input me-2" type="checkbox">
+                <label class="form-label">全選</label>
+            </div>
             <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.item_id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)" />
             <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
                 <template #loading>
@@ -48,6 +47,13 @@ const totalPrice = computed<number>(() => {
                 </template>
             </TriState>
         </div>
-        <h5 class="mt-3">總價：${{ totalPrice }}</h5>
+        <div class="container fixed-bottom">
+            <div class="d-flex flex-row bg-light">
+                <h5 class="text-start mt-3 align-self-begin">總價：${{ totalPrice }}</h5>
+                <div class="d-flex flex-row flex-fill justify-content-end">
+                    <button class="btn btn-danger align-end">點我送出訂單</button>
+                </div>
+            </div>
+        </div>
     </LoginCheck>
 </template>

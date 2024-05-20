@@ -40,7 +40,7 @@ const resetData = () => {
 </script>
 
 <template>
-    <LoginCheck @is-login="router.back()">
+    <LoginCheck @is-login="router.back()" use-own-not-login-handler>
         <template #default></template>
         <template #notLogin>
             <h2 class="text-center mb-3">註冊</h2>

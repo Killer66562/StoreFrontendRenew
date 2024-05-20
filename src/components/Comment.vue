@@ -10,7 +10,7 @@ import { getStaticFile } from '../funcs';
     <div class="row">
         <div class="col-1">
             <RouterLink :to="`/users/${comment.user.id}`">
-                <img class="img-fluid h-100" style="aspect-ratio: 1 /1;" :src="getStaticFile(comment.user.username)" alt="user-icon" v-if="comment.user.username">
+                <img class="img-fluid h-100" style="aspect-ratio: 1 /1;" :src="getStaticFile(comment.user.username)" alt="user-icon" v-if="comment.user.is_admin">
                 <img class="img-fluid h-100" style="aspect-ratio: 1 /1;" src="/src/assets/user.png" alt="user-icon" v-else>
             </RouterLink>
         </div>
