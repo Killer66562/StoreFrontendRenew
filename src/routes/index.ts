@@ -84,6 +84,10 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "districts",
                 component: () => import('../views/AdminDistrictPage.vue')
+            },
+            {
+                path: "users",
+                component: () => import('../views/AdminUsersPage.vue')
             }
         ]
     },

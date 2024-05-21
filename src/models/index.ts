@@ -148,3 +148,15 @@ export interface OrderSchema {
     user_id: number,
     count: number
 } 
+
+export interface UserQuerySchema {
+    id?: number,
+    username?: string,
+    email?: string,
+    birthday_start?: Date,
+    birthday_end?: Date,
+    created_at_start?: Date,
+    created_at_end?: Date,
+    sort_by?: "id" | "username" | "email" | "birthday" | "created_at",
+    desc?: boolean,
+}
