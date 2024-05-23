@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { CUItemSchema, FullItemSchema} from '../models';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { router } from '../routes';
 import { useItemsStore } from '../stores/itemsStore';

@@ -5,7 +5,7 @@ import { RegisterSchema } from '../models';
 import { ref } from 'vue';
 import { useAsyncState } from '@vueuse/core';
 import { useToast } from 'vue-toast-notification';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { getErrorMessage } from '../funcs';
 const data = ref<RegisterSchema>({
     username: "",

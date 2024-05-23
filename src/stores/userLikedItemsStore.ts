@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { FullLikedItemSchema, PageSchema } from "../models";
-import { ApiInstance } from "../api";
+import { ApiInstance } from '../api/apiInstance';
 
 export const useUserLikedItemsStore = defineStore("userLikedItemsStore", () => {
     const page = ref<number>(1);

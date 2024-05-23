@@ -24,11 +24,13 @@ export const useItemDetailStore = defineStore("itemDetailStore", () => {
                         name: "",
                         introduction: "",
                         price: 0,
+                        count: 1,
+                        icon: null,
                         need_18: false
                     }
                 }
                 else {
-                    editableData.value = {...itemDetail.value};
+                    editableData.value = {...itemDetail.value, icon: null };
                 }
             }
         }

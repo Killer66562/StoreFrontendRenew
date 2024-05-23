@@ -2,7 +2,7 @@
 import { FullItemSchema, CUCartItemSchema } from '../models';
 import { getErrorMessage, getStaticFile } from '../funcs';
 import { ref } from 'vue';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { useUserLikedItemsStore } from '../stores/userLikedItemsStore';
 

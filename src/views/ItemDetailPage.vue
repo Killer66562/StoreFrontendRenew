@@ -4,7 +4,7 @@ import { router } from '../routes';
 import ItemInfo from '../components/ItemInfo.vue';
 import TriState from '../components/TriState.vue';
 import { ref } from 'vue';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 import StoreInfo from '../components/StoreInfo.vue';
 import CommentBoard from '../components/CommentBoard.vue';

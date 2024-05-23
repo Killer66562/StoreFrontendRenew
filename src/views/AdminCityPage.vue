@@ -2,7 +2,7 @@
 import { useCitiesStore } from '../stores/citiesStore';
 import { CitySchema, AdminCUCitySchema } from '../models';
 import { ref } from 'vue';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 import AdminCheck from '../components/AdminCheck.vue';
 import { router } from '../routes';

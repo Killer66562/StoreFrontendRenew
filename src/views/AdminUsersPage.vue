@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { /*computed, */ref } from 'vue';
 import AdminCheck from '../components/AdminCheck.vue';
 import { PageSchema, UserQuerySchema, UserSchema } from '../models';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 
 const sortByAvaliable = [
@@ -29,6 +29,7 @@ const resetQuery = () => {
     }
 }
 
+/*
 const resetData = () => {
     page.value = 1;
     pages.value = Infinity;
@@ -43,6 +44,7 @@ const canFirstPage = computed<boolean>(() => page.value > 1);
 const canPrevPage = computed<boolean>(() => page.value > 1);
 const canNextPage = computed<boolean>(() => page.value < pages.value && pages.value != Infinity);
 const canLastPage = computed<boolean>(() => page.value < pages.value && pages.value != Infinity);
+*/
 
 const sendQuery = async () => {
     if (query.value.username?.length == 0)
@@ -59,7 +61,7 @@ const sendQuery = async () => {
 }
 
 const sendQueryState = useAsyncState(() => sendQuery(), undefined, { immediate: false });
-
+/*
 const firstPage = async () => {
     if (canFirstPage.value)
         sendQueryState.execute();
@@ -79,7 +81,7 @@ const LastPage = async () => {
     if (canLastPage.value)
         sendQueryState.execute();
 }
-
+*/
 sendQueryState.execute();
 </script>
 

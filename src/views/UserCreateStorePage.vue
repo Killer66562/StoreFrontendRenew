@@ -4,7 +4,7 @@ import { StoreSchema, CUStoreSchema, FullDistrictSchema } from '../models';
 import { useCitiesStore } from '../stores/citiesStore';
 import { useDistrictsStore } from '../stores/districtsStore';
 import StoreInfo from '../components/StoreInfo.vue';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { router } from '../routes';
 import { useUserStoreStore } from '../stores/userStoreStore';

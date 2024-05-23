@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import LoginCheck from './LoginCheck.vue';
 import { useUserDataStore } from '../stores';
-import { useUserStoreStore } from '../stores/userStoreStore';
 import { storeToRefs } from 'pinia';
 
 const userDatastore = useUserDataStore();

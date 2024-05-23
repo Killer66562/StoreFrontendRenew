@@ -98,7 +98,7 @@ const routes: RouteRecordRaw[] = [
 ];
 
 const options: RouterOptions = {
-    history: createWebHashHistory(),
+    history: createWebHashHistory(import.meta.env.VITE_APP_BASE),
     routes: routes,
 }
 

@@ -4,7 +4,7 @@ import { CUCommentSchema, FullCommentSchema, ItemSchema } from '../models';
 import { getStaticFile } from '../funcs';
 import { useUserDataStore } from '../stores';
 import { ref } from 'vue';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 
 const props = defineProps<{
