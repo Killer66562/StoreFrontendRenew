@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { /*computed, */ref } from 'vue';
+import { computed, ref } from 'vue';
 import AdminCheck from '../components/AdminCheck.vue';
 import { PageSchema, UserQuerySchema, UserSchema } from '../models';
 import { ApiInstance } from '../api/apiInstance';
@@ -29,22 +29,11 @@ const resetQuery = () => {
     }
 }
 
-/*
-const resetData = () => {
-    page.value = 1;
-    pages.value = Infinity;
-    sendQueryState.execute();
-}
-
-const checkboxOnChange = () => {
-    query.value.desc = (query.value.desc === true) ? false : true;
-}
-
 const canFirstPage = computed<boolean>(() => page.value > 1);
 const canPrevPage = computed<boolean>(() => page.value > 1);
 const canNextPage = computed<boolean>(() => page.value < pages.value && pages.value != Infinity);
 const canLastPage = computed<boolean>(() => page.value < pages.value && pages.value != Infinity);
-*/
+
 
 const sendQuery = async () => {
     if (query.value.username?.length == 0)
@@ -57,31 +46,59 @@ const sendQuery = async () => {
     data.value = paginatedData.items;
     page.value = paginatedData.page;
     pages.value = paginatedData.pages;
-    console.log(data.value);
 }
 
 const sendQueryState = useAsyncState(() => sendQuery(), undefined, { immediate: false });
-/*
+
+const switchIsAdmin = async (user: UserSchema) => {
+    const apiInstance = new ApiInstance();
+    try {
+        if (user.is_admin === true)
+            await apiInstance.put(`/admin/users/${user.id}`, {...user, is_admin: false});
+        else
+            await apiInstance.put(`/admin/users/${user.id}`, {...user, is_admin: true});
+        try {
+            sendQueryState.execute();
+        }
+        catch (err) {}
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+const getChinese = (isAdmin: boolean) => {
+    return isAdmin === true ? "是" : "否";
+}
+
 const firstPage = async () => {
-    if (canFirstPage.value)
+    if (canFirstPage.value) {
+        page.value = 1;
         sendQueryState.execute();
+    }
 }
 
 const prevPage = async () => {
-    if (canPrevPage.value)
+    if (canPrevPage.value) {
+        page.value--;
         sendQueryState.execute();
+    }
 }
 
 const nextPage = async () => {
-    if (canNextPage.value)
+    if (canNextPage.value) {
+        page.value++;
         sendQueryState.execute();
+    }
 }
 
-const LastPage = async () => {
-    if (canLastPage.value)
+const lastPage = async () => {
+    if (canLastPage.value) {
+        page.value = pages.value;
         sendQueryState.execute();
+    }
 }
-*/
+
 sendQueryState.execute();
 </script>
 
@@ -99,19 +116,19 @@ sendQueryState.execute();
                 </div>
                 <div class="col-12 col-md-3 mb-3">
                     <label class="form-label">生日(從)</label>
-                    <input type="text" class="form-control" v-model="query.birthday_start">
+                    <input type="date" class="form-control" v-model="query.birthday_start">
                 </div>
                 <div class="col-12 col-md-3 mb-3">
                     <label class="form-label">生日(到)</label>
-                    <input type="text" class="form-control" v-model="query.birthday_end">
+                    <input type="date" class="form-control" v-model="query.birthday_end">
                 </div>
                 <div class="col-12 col-md-3 mb-3">
                     <label class="form-label">創建日期(從)</label>
-                    <input type="text" class="form-control" v-model="query.created_at_start">
+                    <input type="date" class="form-control" v-model="query.created_at_start">
                 </div>
                 <div class="col-12 col-md-3 mb-3">
                     <label class="form-label">創建日期(到)</label>
-                    <input type="text" class="form-control" v-model="query.created_at_end">
+                    <input type="date" class="form-control" v-model="query.created_at_end">
                 </div>
                 <div class="col-12 col-md-6 mb-3">
                     <label class="form-label">倒序排列</label>
@@ -125,12 +142,22 @@ sendQueryState.execute();
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="d-flex flex-row justify-content-center mb-3">
                 <div class="btn btn-group mb-3">
                     <button type="submit" class="btn btn-success">送出查詢</button>
                     <button type="reset" class="btn btn-danger">重新填寫</button>
                 </div>
             </div>
         </form>
+        <div class="d-flex flex-row justify-content-center mb-3">
+            <div class="btn-group">
+                <button type="button" class="btn btn-danger" @click="firstPage" :disabled="!canFirstPage">回第一頁</button>
+                <button type="button" class="btn btn-warning" @click="prevPage" :disabled="!canPrevPage">上一頁</button>
+                <button type="button" class="btn btn-warning" @click="nextPage" :disabled="!canNextPage">下一頁</button>
+                <button type="button" class="btn btn-danger" @click="lastPage" :disabled="!canLastPage">最後一頁</button>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -150,7 +177,10 @@ sendQueryState.execute();
                         <td>{{ user.email }}</td>
                         <td>{{ user.birthday }}</td>
                         <td>{{ user.created_at }}</td>
-                        <td>{{ user.is_admin }}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" v-if="user.is_admin === true" @click="switchIsAdmin(user)">{{ getChinese(user.is_admin) }}</button>
+                            <button type="button" class="btn btn-danger" v-else @click="switchIsAdmin(user)">{{ getChinese(user.is_admin) }}</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
