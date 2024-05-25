@@ -103,27 +103,27 @@ const onNotLogin = async () => {
 
 <template>
     <LoginCheck @not-login="onNotLogin">
-        <h2 class="text-center mb-3">建立商店</h2>
+        <h2 class="text-center mb-3">建立拍賣小舖</h2>
         <form class="mb-3" @submit.prevent="sendData" @reset.prevent="resetData">
             <div class="row mb-3">
                 <div class="col-12 col-md-4">
                     <div class="mb-3">
-                        <label class="fomr-label">商店名稱</label>
-                        <input type="text" class="form-control" placeholder="請輸入商店名稱" v-model="data.name" required>
+                        <label class="fomr-label">拍賣小舖名稱</label>
+                        <input type="text" class="form-control" placeholder="請輸入拍賣小舖名稱" v-model="data.name" required>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">商店Icon</label>
+                        <label class="form-label">拍賣小舖Icon</label>
                         <input ref="inputRef" class="form-control" type="file" @change="onIconChange">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">商店所在城市</label>
+                        <label class="form-label">拍賣小舖所在城市</label>
                         <select class="form-select" required v-model="selectedCityId">
                             <option :value="undefined">請選擇城市</option>
                             <option :value="city.id" v-for="city in citiesStore.citiesData" :key="city.id">{{ city.name }}</option>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">商店所在地區</label>
+                        <label class="form-label">拍賣小舖所在地區</label>
                         <select class="form-select" required v-model="data.district_id">
                             <option :value="undefined">請選擇地區</option>
                             <option :value="district.id" v-for="district in filteredDistricts" :key="district.id">{{ district.name }}</option>
@@ -131,8 +131,8 @@ const onNotLogin = async () => {
                     </div>
                 </div>
                 <div class="col-12 col-md-8 mb-3">
-                    <label class="fomr-label">商店介紹</label>
-                    <textarea type="text" class="form-control h-100" placeholder="請輸入商店介紹" v-model="data.introduction" rows="10"></textarea>
+                    <label class="fomr-label">拍賣小舖介紹</label>
+                    <textarea type="text" class="form-control h-100" placeholder="請輸入拍賣小舖介紹" v-model="data.introduction" rows="10"></textarea>
                 </div>
             </div>
             <div class="d-flex flex-row justify-content-center">
@@ -142,7 +142,7 @@ const onNotLogin = async () => {
                 </div> 
             </div>
         </form>
-        <h3 class="mb-3">商店預覽</h3>
+        <h3 class="mb-3">拍賣小舖預覽</h3>
         <StoreInfo :store="store" :own-link="store.icon"/>
     </LoginCheck>
 </template>

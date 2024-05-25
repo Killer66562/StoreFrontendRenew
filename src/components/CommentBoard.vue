@@ -45,7 +45,7 @@ const sendState = useAsyncState(() => sendComment(), undefined, { immediate: fal
         <div class="col-11">
             <form @submit.prevent="sendState.execute" @reset.prevent="">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="請輸入留言" v-model="data.content">
+                    <input type="text" class="form-control" placeholder="請輸入留言" v-model="data.content" required>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit">送出</button>
                     </div>

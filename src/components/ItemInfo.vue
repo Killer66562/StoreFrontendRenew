@@ -48,6 +48,7 @@ const addToLikedItems = async () => {
         toast.error(errMessage);
     }
     try {
+        userLikedItemsStore.reset();
         await userLikedItemsStore.fetchLikedItems();
     }
     catch (err) {}

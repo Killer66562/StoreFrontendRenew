@@ -8,9 +8,10 @@ import LoginCheck from '../components/LoginCheck.vue';
 import { router } from '../routes';
 
 const loader = ref();
-const userLikedItemsStore = useUserLikedItemsStore();
 
 const fetchState = useAsyncState(() => userLikedItemsStore.fetchLikedItems(), undefined, { immediate: false });
+
+const userLikedItemsStore = useUserLikedItemsStore();
 
 useInfiniteScroll(loader, () => fetchState.execute(), { canLoadMore: () => { return userLikedItemsStore.canLoadMore && !fetchState.isLoading.value }, interval: 1000 });
 

@@ -1,10 +1,36 @@
 <script setup lang="ts">
 import { FullLikedItemSchema } from '../models';
 import { getStaticFile } from '../funcs';
+import { useToast } from 'vue-toast-notification';
+import { useUserLikedItemsStore } from '../stores/userLikedItemsStore';
+import { ApiInstance } from '../api/apiInstance';
 
-defineProps<{
+const emits = defineEmits<{
+    del: [FullLikedItemSchema]
+}>();
+
+const props = defineProps<{
     likedItem: FullLikedItemSchema
 }>();
+
+const toast = useToast();
+const userLikedItemsStore = useUserLikedItemsStore();
+
+const deleteLikedItem = async () => {
+    const apiInstance = new ApiInstance();
+    try {
+        await apiInstance.delete(`/user/liked_items/${props.likedItem.id}`);
+        toast.success(`成功將${props.likedItem.item.name}移出願望清單！`);
+        try {
+            userLikedItemsStore.reset();
+            await userLikedItemsStore.fetchLikedItems();
+        }
+        catch (err) {}
+    }
+    catch (err) {
+        toast.error(err as string);
+    }
+}
 </script>
 
 <template>
@@ -29,7 +55,7 @@ defineProps<{
             </div>
             <div class="col-3 col-sm-2 col-md-2 pt-4">
                 <div class="d-flex flex-row justify-content-end">
-                    <button class="btn btn-danger btn-sm" type="button">刪除</button>
+                    <button class="btn btn-danger btn-sm" type="button" @click="deleteLikedItem">刪除</button>
                 </div>
             </div>
         </div>

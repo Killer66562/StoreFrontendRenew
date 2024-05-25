@@ -17,10 +17,13 @@ export const useUserLikedItemsStore = defineStore("userLikedItemsStore", () => {
             pages.value = fetchedData.pages;
         }
     }
-    const reset = () => {
+    const resetPage = () => {
         page.value = 1;
         pages.value = Infinity;
+    }
+    const reset = () => {
+        resetPage();
         likedItemsData.value = [];
     }
-    return { page, pages, canLoadMore, fetchLikedItems, reset, likedItemsData };
+    return { page, pages, canLoadMore, fetchLikedItems, reset, resetPage, likedItemsData };
 });

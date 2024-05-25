@@ -21,9 +21,9 @@ const userStoreStore = useUserStoreStore();
                     <RouterLink to="/user/create-item">點我上架新商品</RouterLink>
                 </template>
                 <template v-else>
-                    <h2 class="text-center">你還沒有創建商店喔</h2>
+                    <h2 class="text-center">你還沒有建立自己的拍賣小舖喔</h2>
                     <div class="text-center" >
-                        <RouterLink to="/user/create-store">點我創建商店</RouterLink>
+                        <RouterLink to="/user/create-store">點我建立</RouterLink>
                     </div>
                 </template>
             </template>
