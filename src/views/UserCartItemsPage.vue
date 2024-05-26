@@ -12,17 +12,20 @@ const userCartItemsStore = useUserCartItemsStore();
 
 const fetchState = useAsyncState(() => userCartItemsStore.fetchCartItems(), undefined, { immediate: false });
 
-//useInfiniteScroll(loader, () => fetchState.execute(), { canLoadMore: () => { return userCartItemsStore.canLoadMore && !fetchState.isLoading.value }, interval: 1000 });
-
 const selectedItems = ref<CartItemSchema[]>([]);
 
 const selectedItemsOnChange = (cItem: CartItemSchema) => {
     const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
+    console.log(idx);
     if (idx > -1)
-        selectedItems.value.splice(idx);
+        selectedItems.value.splice(idx, 1);
     else
         selectedItems.value.push(cItem);
 }
+
+const allSelected = computed(() => {
+    return selectedItems.value.length > 0 && selectedItems.value.length == userCartItemsStore.cartItemsData.length;
+})
 
 const totalPrice = computed<number>(() => {
     let total = 0;
@@ -31,16 +34,33 @@ const totalPrice = computed<number>(() => {
     });
     return total;
 });
+
+const selectAll = () => {
+    if (allSelected.value === true) {
+        userCartItemsStore.cartItemsData.forEach((cItem) => {
+            const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
+            if (idx > -1)
+                selectedItems.value.splice(idx, 1);
+        })
+    }
+    else {
+        userCartItemsStore.cartItemsData.forEach((cItem) => {
+            const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
+            if (idx < 0)
+                selectedItems.value.push(cItem);
+        });
+    }
+}
 </script>
 
 <template>
     <LoginCheck>
         <div class="container bg-light" ref="loader">
             <div class="d-flex flex-row flex-fill">
-                <input class="form-check-input me-2" type="checkbox">
+                <input class="form-check-input me-2" type="checkbox" :checked="allSelected" @click="selectAll">
                 <label class="form-label">全選</label>
             </div>
-            <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.item_id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)" />
+            <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)" :checked="selectedItems.findIndex((cItem) => cItem.id == cartItem.id) > -1" />
             <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
                 <template #loading>
                     <h3 class="text-center">讀取中。。。</h3>

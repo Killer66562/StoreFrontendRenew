@@ -8,7 +8,8 @@ const emits = defineEmits<{
 }>();
 
 defineProps<{
-    cartItem: CartItemSchema
+    cartItem: CartItemSchema,
+    checked: boolean
 }>();
 </script>
 
@@ -17,7 +18,7 @@ defineProps<{
         <div class="row bg-light">
             <div class="col-sm-auto d-flex align-items-center">
                 <div class="pb-2">
-                    <input type="checkbox" class="form-check-input align-middle" @change="emits('checkedChanged')" />
+                    <input type="checkbox" class="form-check-input align-middle" @click="emits('checkedChanged')" :value="cartItem" :checked="checked" />
                 </div>
             </div>
             <div class="col-11">

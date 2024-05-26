@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { FullItemSchema, PageSchema } from "../models";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { ApiInstance } from "../api";
 
 export const useItemsStore = defineStore("itemsStore", () => {
@@ -11,6 +11,9 @@ export const useItemsStore = defineStore("itemsStore", () => {
     const itemsData = ref<FullItemSchema[]>([]);
     const page = ref<number>(1);
     const pages = ref<number>(Infinity);
+    const canLoadMore = computed<boolean>(() => {
+        return page.value <= pages.value;
+    })
     const fetchHotItems = async () => {
         const apiInstance = new ApiInstance();
         hotItems.value = await apiInstance.get("/general/items/hot");
@@ -25,7 +28,7 @@ export const useItemsStore = defineStore("itemsStore", () => {
     }
     const fetchItemsData = async () => {
         const apiInstance = new ApiInstance();
-        if (page.value < pages.value) {
+        if (canLoadMore.value === true) {
             const paginatedData: PageSchema<FullItemSchema> = await apiInstance.get("/general/items", { page: page.value });
             itemsData.value.push(...paginatedData.items);
             pages.value = paginatedData.pages;
@@ -33,11 +36,13 @@ export const useItemsStore = defineStore("itemsStore", () => {
         }
     }
     const resetAll = () => {
+        page.value = 1;
+        pages.value = Infinity;
         inited.value = false;
         hotItems.value = [];
         bestItems.value = [];
         likedItems.value = [];
         itemsData.value = [];
     }
-    return { inited, hotItems, bestItems, likedItems, itemsData, fetchHotItems, fetchBestItems, fetchLikedItems, fetchItemsData, resetAll };
+    return { inited, hotItems, bestItems, likedItems, itemsData, fetchHotItems, fetchBestItems, fetchLikedItems, fetchItemsData, resetAll, canLoadMore };
 });

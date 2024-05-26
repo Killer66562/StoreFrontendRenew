@@ -53,7 +53,13 @@ const sendData = async () => {
         }
         catch (err) {}
         try {
-            await useItemStore.fetchItemsData();
+            useItemStore.resetAll();
+            await Promise.all([
+                useItemStore.fetchBestItems(),
+                useItemStore.fetchHotItems(),
+                useItemStore.fetchLikedItems(),
+                useItemStore.fetchItemsData()
+            ]);
         }
         catch (err) {}
         await router.replace("/user/store/items");
