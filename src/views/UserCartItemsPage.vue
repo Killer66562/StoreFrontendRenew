@@ -25,7 +25,7 @@ const selectedItemsOnChange = (cItem: CartItemSchema) => {
 
 const allSelected = computed(() => {
     return selectedItems.value.length > 0 && selectedItems.value.length == userCartItemsStore.cartItemsData.length;
-})
+});
 
 const totalPrice = computed<number>(() => {
     let total = 0;
