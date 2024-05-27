@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import { useItemsStore } from '../stores/itemsStore';
 import ItemCardRow from '../components/ItemCardRow.vue';
-import TriState from '../components/TriState.vue';
-import { useRootStore } from '../stores/rootStore';
 import ItemCard from '../components/ItemCard.vue';
 import { useAsyncState } from '@vueuse/core';
 import InitCheck from '../components/InitCheck.vue';
 
-const rootStore = useRootStore();
 const itemsStore = useItemsStore();
 
 const fetchState = useAsyncState(() => itemsStore.fetchItemsData(), undefined, { immediate: false })
