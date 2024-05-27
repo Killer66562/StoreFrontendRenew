@@ -16,7 +16,6 @@ const selectedItems = ref<CartItemSchema[]>([]);
 
 const selectedItemsOnChange = (cItem: CartItemSchema) => {
     const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
-    console.log(idx);
     if (idx > -1)
         selectedItems.value.splice(idx, 1);
     else
@@ -46,16 +45,24 @@ const selectAll = () => {
         });
     }
 }
+
+const onDelete = (cItem: CartItemSchema) => {
+    const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
+    if (idx > -1)
+        selectedItems.value.splice(idx, 1);
+    fetchState.execute();
+}
 </script>
 
 <template>
     <LoginCheck>
-        <div class="container bg-light" ref="loader">
+        <div class="container bg-light" ref="loader" style="min-height: 80vh;">
             <div class="d-flex flex-row flex-fill">
                 <input class="form-check-input me-2" type="checkbox" :checked="allSelected" @click="selectAll">
                 <label class="form-label">全選</label>
             </div>
-            <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)" :checked="selectedItems.findIndex((cItem) => cItem.id == cartItem.id) > -1" />
+            <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)"
+            :checked="selectedItems.findIndex((cItem) => cItem.id == cartItem.id) > -1" @deleted="onDelete"/>
             <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
                 <template #loading>
                     <h3 class="text-center">讀取中。。。</h3>
@@ -63,10 +70,16 @@ const selectAll = () => {
             </TriState>
         </div>
         <div class="container fixed-bottom">
-            <div class="d-flex flex-row bg-light">
-                <h5 class="text-start mt-3 align-self-begin">總價：${{ totalPrice }}</h5>
-                <div class="d-flex flex-row flex-fill justify-content-end">
-                    <button class="btn btn-danger align-end">點我下單</button>
+            <div class="container bg-light">
+                <div class="row">
+                    <div class="col-8">
+                        <h5 class="text-start mt-3 align-start">總價：${{ totalPrice }}</h5>
+                    </div>
+                    <div class="col-4">
+                        <div class="d-flex">
+                            <button class="btn btn-danger align-end">點我下單</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

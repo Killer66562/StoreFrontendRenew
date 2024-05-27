@@ -6,6 +6,7 @@ import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { useUserLikedItemsStore } from '../stores/userLikedItemsStore';
 import { useUserCartItemsStore } from '../stores/userCartItemsStore';
+import LoginCheck from './LoginCheck.vue';
 
 const toast = useToast();
 const userLikedItemsStore = useUserLikedItemsStore();
@@ -83,8 +84,10 @@ const addToLikedItems = async () => {
                     <button class="btn btn-outline-success" type="button" @click="">加入願望清單</button>
                 </template>
                 <template v-else>
-                    <button class="btn btn-outline-danger" type="button" @click="addToCartItems">加入購物車</button>
-                    <button class="btn btn-outline-success" type="button" @click="addToLikedItems">加入願望清單</button>
+                    <LoginCheck use-own-not-login-handler>
+                        <button class="btn btn-outline-danger" type="button" @click="addToCartItems">加入購物車</button>
+                        <button class="btn btn-outline-success" type="button" @click="addToLikedItems">加入願望清單</button>
+                    </LoginCheck>
                 </template>
                 <p>{{ item.introduction }}</p>
             </div>

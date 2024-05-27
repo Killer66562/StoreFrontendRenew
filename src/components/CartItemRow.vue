@@ -1,16 +1,33 @@
 <script setup lang="ts">
 import { CartItemSchema } from '../models';
-import { getStaticFile } from '../funcs';
+import { getErrorMessage, getStaticFile } from '../funcs';
 import LoginCheck from './LoginCheck.vue';
+import { ApiInstance } from '../api/apiInstance';
+import { useToast } from 'vue-toast-notification';
+
+const toast = useToast();
 
 const emits = defineEmits<{
-    checkedChanged: []
+    checkedChanged: [],
+    deleted: [CartItemSchema]
 }>();
 
-defineProps<{
+const props = defineProps<{
     cartItem: CartItemSchema,
     checked: boolean
 }>();
+
+const deleteCartItem = async () => {
+    const apiInstance = new ApiInstance();
+    try {
+        await apiInstance.delete(`/user/cart_items/${props.cartItem.id}`);
+        toast.success(`成功將${props.cartItem.item.name}移出購物車`);
+        emits('deleted', props.cartItem);
+    }
+    catch (err) {
+        toast.error(getErrorMessage(err));
+    }
+}
 </script>
 
 <template>
@@ -30,7 +47,7 @@ defineProps<{
                         </RouterLink>
                     </div>
                     <div class="col-7 col-sm-8 col-md-9 col-lg-10">
-                        <h5>{{ cartItem.item.name }}</h5>
+                        <h5 class="text-break">{{ cartItem.item.name }}</h5>
                         <h6 class="text-danger">${{ cartItem.item.price }}</h6>
                         <div class="row">
                             <div class="col-12 col-sm-8 col-md-6 col-lg-4">
@@ -41,7 +58,7 @@ defineProps<{
                 </div>
             </div>
             <div class="d-flex flex-row flex-fill justify-content-end align-items-center">
-                <button class="btn btn-danger btn-sm" type="button">刪除</button>
+                <button class="btn btn-danger btn-sm" type="button" @click="deleteCartItem">刪除</button>
             </div>
         </div>
     </LoginCheck>

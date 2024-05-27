@@ -20,3 +20,10 @@ defineProps<{
         </div>
     </RouterLink>
 </template>
+
+<style scoped>
+.card:hover {
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 13px 26px;
+    transform: translate3d(0px, -2px, 0px);
+}
+</style>
