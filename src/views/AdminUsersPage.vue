@@ -4,6 +4,10 @@ import AdminCheck from '../components/AdminCheck.vue';
 import { PageSchema, UserQuerySchema, UserSchema } from '../models';
 import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
+import { useToast } from 'vue-toast-notification';
+import { getErrorMessage } from '../funcs';
+
+const toast = useToast();
 
 const sortByAvaliable = [
     {name: "ID", value: "id"},
@@ -53,16 +57,21 @@ const sendQueryState = useAsyncState(() => sendQuery(), undefined, { immediate: 
 const switchIsAdmin = async (user: UserSchema) => {
     const apiInstance = new ApiInstance();
     try {
-        if (user.is_admin === true)
+        if (user.is_admin === true) {
             await apiInstance.put(`/admin/users/${user.id}`, {...user, is_admin: false});
-        else
+            toast.success(`已將${user.username}的管理員權限移除`);
+        }
+        else {
             await apiInstance.put(`/admin/users/${user.id}`, {...user, is_admin: true});
+            toast.success(`已將${user.username}晉升為管理員`);
+        }
         try {
             sendQueryState.execute();
         }
         catch (err) {}
     }
     catch (err) {
+        toast.error(getErrorMessage(err));
         throw err;
     }
 }
@@ -172,11 +181,11 @@ sendQueryState.execute();
                 </thead>
                 <tbody>
                     <tr v-for="user in data" :key="user.id">
-                        <td>{{ user.id }}</td>
-                        <td>{{ user.username }}</td>
-                        <td>{{ user.email }}</td>
-                        <td>{{ user.birthday }}</td>
-                        <td>{{ user.created_at }}</td>
+                        <td class="text-break">{{ user.id }}</td>
+                        <td class="text-break">{{ user.username }}</td>
+                        <td class="text-break">{{ user.email }}</td>
+                        <td class="text-break">{{ user.birthday }}</td>
+                        <td class="text-break">{{ user.created_at }}</td>
                         <td>
                             <button type="button" class="btn btn-success" v-if="user.is_admin === true" @click="switchIsAdmin(user)">{{ getChinese(user.is_admin) }}</button>
                             <button type="button" class="btn btn-danger" v-else @click="switchIsAdmin(user)">{{ getChinese(user.is_admin) }}</button>

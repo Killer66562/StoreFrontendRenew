@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useInfiniteScroll, useAsyncState } from '@vueuse/core';
+import { useAsyncState } from '@vueuse/core';
 import { userOrdersStore } from '../stores/userOrdersStore';
 import { ref } from 'vue';
 import orderRow from '../components/OrderRow.vue';

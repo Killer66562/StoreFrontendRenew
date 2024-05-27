@@ -8,11 +8,13 @@ import { useItemsStore } from '../stores/itemsStore';
 import ItemInfo from '../components/ItemInfo.vue';
 import { getErrorMessage } from '../funcs';
 import LoginCheck from '../components/LoginCheck.vue';
+import { useUserStoreItemsStore } from '../stores/userStoreItemsStore';
 
 const inputRef = ref<HTMLInputElement>();
 const toast = useToast();
 
 const useItemStore = useItemsStore();
+const userStoreItemsStore = useUserStoreItemsStore();
 
 const data = ref<CUItemSchema>({
     name: "",
@@ -54,16 +56,21 @@ const sendData = async () => {
         }
         catch (err) {}
         try {
+            userStoreItemsStore.reset();
+            await userStoreItemsStore.fetchItemsData();
+        }
+        catch (err) {}
+        try {
             useItemStore.resetAll();
             await Promise.all([
                 useItemStore.fetchBestItems(),
                 useItemStore.fetchHotItems(),
                 useItemStore.fetchLikedItems(),
-                useItemStore.fetchItemsData()
+                useItemStore.fetchItemsData(),
             ]);
         }
         catch (err) {}
-        await router.replace("/user/store/items");
+        await router.replace("/user/store");
         toast.success("創建成功！");
     }
     catch (err) {

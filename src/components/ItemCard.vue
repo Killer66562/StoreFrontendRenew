@@ -23,7 +23,7 @@ defineProps<{
 
 <style scoped>
 .card:hover {
-    box-shadow: rgba(0, 0, 0, 0.5) 0px 13px 26px;
-    transform: translate3d(0px, -2px, 0px);
+    box-shadow: rgba(255, 255, 127, 0.6) 0px 20px 40px;
+    transform: translate3d(0px, -5px, 5px);
 }
 </style>

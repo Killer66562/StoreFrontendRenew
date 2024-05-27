@@ -4,6 +4,7 @@ import ItemCardRow from '../components/ItemCardRow.vue';
 import ItemCard from '../components/ItemCard.vue';
 import { useAsyncState } from '@vueuse/core';
 import InitCheck from '../components/InitCheck.vue';
+import ItemCardAll from '../components/ItemCardAll.vue';
 
 const itemsStore = useItemsStore();
 
@@ -26,17 +27,7 @@ const fetchState = useAsyncState(() => itemsStore.fetchItemsData(), undefined, {
     <h2>商品一覽</h2>
     <InitCheck>
         <template #ready>
-            <template v-if="itemsStore.itemsData.length > 0">
-                <div class="row">
-                    <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-3" v-for="item in itemsStore.itemsData" >
-                        <ItemCard :item="item" :key="item.id" />
-                    </div>
-                </div>
-                <div class="row">
-                    <button type="button" class="btn btn-warning" @click="fetchState.execute" v-if="itemsStore.canLoadMore" :disabled="fetchState.isLoading.value">載入更多</button>
-                </div>
-            </template>
-            <template v-else><h3 class="text-center">目前沒有任何商品喔</h3></template>
+            <ItemCardAll :items="itemsStore.itemsData" :can-load-more="itemsStore.canLoadMore" :error="fetchState.error.value" :loading="fetchState.isLoading.value" @load-more="fetchState.execute" />
         </template>
     </InitCheck>
 </template>
