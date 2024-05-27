@@ -12,8 +12,6 @@ const useUserOrdersStore = userOrdersStore();
 
 const fetchState = useAsyncState(() => useUserOrdersStore.fetchLikedItems(), undefined, { immediate: false });
 
-useInfiniteScroll(loader, () => fetchState.execute(), { canLoadMore: () => { return useUserOrdersStore.canLoadMore && !fetchState.isLoading.value }, interval: 1000 });
-
 const onNotLogin = async () => {
     await router.replace("/login");
 }

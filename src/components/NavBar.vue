@@ -17,7 +17,7 @@ const logout = async () => {
     <nav class="navbar navbar-expand-lg navbar-warning bg-warning">
         <div class="container">
             <RouterLink to="/" class="navbar-brand">
-                <h1 class="fs-2">Store</h1>
+                <h1 class="fs-2">👐🏻🛍️</h1>
             </RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,6 +43,11 @@ const logout = async () => {
                         <li class="nav-item">
                             <RouterLink to="/user/store" class="nav-link active text-center">
                                 <img class="nav-brand" src="../assets/store.png" alt="我的商店" height="24" width="24">
+                            </RouterLink>
+                        </li>
+                        <li class="nav-item">
+                            <RouterLink to="/user" class="nav-link active text-center">
+                                <img class="nav-brand" src="../assets/user.png" alt="個人資訊" height="24" width="24">
                             </RouterLink>
                         </li>
                     </LoginCheck>

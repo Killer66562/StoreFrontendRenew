@@ -24,6 +24,7 @@ const data = ref<CUItemSchema>({
 });
 
 const resetData = () => {
+    key.value++;
     data.value = {
         name: "",
         introduction: "",
@@ -104,6 +105,8 @@ const item = computed<FullItemSchema>(() => {
     }
 });
 
+const key = ref<number>(0);
+
 const onNotLogin = async () => {
     await router.replace("/login");
 }
@@ -121,7 +124,7 @@ const onNotLogin = async () => {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">商品Icon</label>
-                        <input ref="inputRef" class="form-control" type="file" @change="onIconChange">
+                        <input ref="inputRef" class="form-control" type="file" @change="onIconChange" :key="key">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">商品價格</label>

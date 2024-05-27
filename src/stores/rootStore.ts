@@ -7,6 +7,7 @@ import { useCitiesStore } from "./citiesStore";
 import { useDistrictsStore } from "./districtsStore";
 import { useItemsStore } from "./itemsStore";
 import { useUserCartItemsStore } from "./userCartItemsStore";
+import { useUserLikedItemsStore } from "./userLikedItemsStore";
 
 export const useRootStore = defineStore("rootStore", () => {
     const tokenStore = useTokenStore();
@@ -16,6 +17,7 @@ export const useRootStore = defineStore("rootStore", () => {
     const districtsStore = useDistrictsStore();
     const itemsStore = useItemsStore();
     const userCartItemsStore = useUserCartItemsStore();
+    const userLikedItemsStore = useUserLikedItemsStore();
 
     const init = async () => {
         try {
@@ -39,7 +41,8 @@ export const useRootStore = defineStore("rootStore", () => {
                 await Promise.all([
                     citiesStore.fetchData(),
                     districtsStore.fetchData(),
-                    userCartItemsStore.fetchCartItems()
+                    userCartItemsStore.fetchCartItems(),
+                    userLikedItemsStore.fetchLikedItems()
                 ]);
             }
             catch (err) { throw err; }

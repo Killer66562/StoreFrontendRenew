@@ -36,13 +36,8 @@ const totalPrice = computed<number>(() => {
 });
 
 const selectAll = () => {
-    if (allSelected.value === true) {
-        userCartItemsStore.cartItemsData.forEach((cItem) => {
-            const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
-            if (idx > -1)
-                selectedItems.value.splice(idx, 1);
-        })
-    }
+    if (allSelected.value === true) 
+        selectedItems.value = [];
     else {
         userCartItemsStore.cartItemsData.forEach((cItem) => {
             const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
@@ -71,7 +66,7 @@ const selectAll = () => {
             <div class="d-flex flex-row bg-light">
                 <h5 class="text-start mt-3 align-self-begin">總價：${{ totalPrice }}</h5>
                 <div class="d-flex flex-row flex-fill justify-content-end">
-                    <button class="btn btn-danger align-end">點我送出訂單</button>
+                    <button class="btn btn-danger align-end">點我下單</button>
                 </div>
             </div>
         </div>

@@ -11,7 +11,8 @@ const data = ref<RegisterSchema>({
     username: "",
     email: "",
     password: "",
-    birthday: new Date()
+    birthday: new Date(),
+    icon: null
 });
 const sendData = async () => {
     const apiInstance = new ApiInstance();
@@ -34,7 +35,8 @@ const resetData = () => {
         username: "",
         password: "",
         email: "",
-        birthday: new Date()
+        birthday: new Date(),
+        icon: null
     }
 }
 </script>

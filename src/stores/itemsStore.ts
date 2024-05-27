@@ -29,7 +29,7 @@ export const useItemsStore = defineStore("itemsStore", () => {
     const fetchItemsData = async () => {
         const apiInstance = new ApiInstance();
         if (canLoadMore.value === true) {
-            const paginatedData: PageSchema<FullItemSchema> = await apiInstance.get("/general/items", { page: page.value });
+            const paginatedData: PageSchema<FullItemSchema> = await apiInstance.get("/general/items", { page: page.value, size: 60 });
             itemsData.value.push(...paginatedData.items);
             pages.value = paginatedData.pages;
             ++page.value;

@@ -5,9 +5,11 @@ import { ref } from 'vue';
 import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { useUserLikedItemsStore } from '../stores/userLikedItemsStore';
+import { useUserCartItemsStore } from '../stores/userCartItemsStore';
 
 const toast = useToast();
 const userLikedItemsStore = useUserLikedItemsStore();
+const userCartItemsStore = useUserCartItemsStore();
 
 const props = defineProps<{
     item: FullItemSchema,
@@ -27,7 +29,7 @@ const addToCartItems = async () => {
         toast.success("成功將商品加入購物車！");
         userLikedItemsStore.reset();
         try {
-            await userLikedItemsStore.fetchLikedItems();
+            await userCartItemsStore.fetchCartItems();
         }
         catch (err) {}
     }
@@ -42,16 +44,15 @@ const addToLikedItems = async () => {
     try {
         await apiInstance.post("/user/liked_items", data.value);
         toast.success("成功將商品加入願望清單！");
+        try {
+            await userLikedItemsStore.fetchLikedItems();
+        }
+        catch (err) {}
     }
     catch (err) {
         const errMessage = getErrorMessage(err);
         toast.error(errMessage);
     }
-    try {
-        userLikedItemsStore.reset();
-        await userLikedItemsStore.fetchLikedItems();
-    }
-    catch (err) {}
 }
 </script>
 

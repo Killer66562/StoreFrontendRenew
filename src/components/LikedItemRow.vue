@@ -22,7 +22,6 @@ const deleteLikedItem = async () => {
         await apiInstance.delete(`/user/liked_items/${props.likedItem.id}`);
         toast.success(`成功將${props.likedItem.item.name}移出願望清單！`);
         try {
-            userLikedItemsStore.reset();
             await userLikedItemsStore.fetchLikedItems();
         }
         catch (err) {}

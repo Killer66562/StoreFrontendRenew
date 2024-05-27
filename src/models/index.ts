@@ -10,12 +10,17 @@ export interface LoginSchema {
 
 export interface RegisterSchema extends LoginSchema {
     email: string,
-    birthday: Date
+    birthday: Date,
+    icon: File | null
 }
 
-export interface UserSchema extends BaseSchema, RegisterSchema {
+export interface UserSchema extends BaseSchema {
+    username: string,
+    email: string,
+    birthday: Date
     is_admin: boolean,
-    is_banned: boolean
+    is_banned: boolean,
+    icon: string | null
 }
 
 export interface TokenSchema {
