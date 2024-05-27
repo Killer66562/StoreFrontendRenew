@@ -145,10 +145,15 @@ export interface CustomError {
     status?: number
 }
 
-export interface OrderSchema {
+export interface CUOrderSchema {
+    item_id: number,
+    count: number,
+    address: string,
+    note: string | null
+}
+
+export interface OrderSchema extends BaseSchema, CUOrderSchema {
     item: ItemSchema,
-    id: number,
-    created_at: Date,
     item_id: number,
     user_id: number,
     count: number
