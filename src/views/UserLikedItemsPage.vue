@@ -15,13 +15,17 @@ const userLikedItemsStore = useUserLikedItemsStore();
 
 <template>
     <LoginCheck>
-        <div class="container" ref="loader">
-            <LikedItemRow v-for="likedItem in userLikedItemsStore.likedItemsData" :key="likedItem.id" :liked-item="likedItem" />
-            <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
-                <template #loading>
-                    <h3 class="text-center">讀取中。。。</h3>
-                </template>
-            </TriState>
-        </div>
+        <h2 class="text-center">願望清單</h2>
+        <template v-if="userLikedItemsStore.likedItemsData.length > 0">
+            <div class="container" ref="loader">
+                <LikedItemRow v-for="likedItem in userLikedItemsStore.likedItemsData" :key="likedItem.id" :liked-item="likedItem" />
+                <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
+                    <template #loading>
+                        <h3 class="text-center">讀取中。。。</h3>
+                    </template>
+                </TriState>
+            </div>
+        </template>
+        <h3 class="text-center" v-else>你還沒有把任何商品加入願望清單喔</h3>
     </LoginCheck>
 </template>

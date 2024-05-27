@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useItemsStore } from '../stores/itemsStore';
 import ItemCardRow from '../components/ItemCardRow.vue';
-import ItemCard from '../components/ItemCard.vue';
 import { useAsyncState } from '@vueuse/core';
 import InitCheck from '../components/InitCheck.vue';
 import ItemCardAll from '../components/ItemCardAll.vue';

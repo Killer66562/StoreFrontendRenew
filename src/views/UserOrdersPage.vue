@@ -18,14 +18,18 @@ const onNotLogin = async () => {
 </script>
 
 <template>
-    <LoginCheck @not-login="onNotLogin">
-        <div class="container" ref="loader">
-            <orderRow v-for="cartItem in useUserOrdersStore.orderItemsData" :key="cartItem.id" :orderedItem="cartItem" />
-            <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
-                <template #loading>
-                    <h3 class="text-center">讀取中。。。</h3>
-                </template>
-            </TriState>
-        </div>
-    </LoginCheck>
+    <h2 class="text-center">訂單狀態一覽</h2>
+    <template v-if="useUserOrdersStore.orderItemsData.length > 0">
+        <LoginCheck @not-login="onNotLogin">
+            <div class="container" ref="loader">
+                <orderRow v-for="cartItem in useUserOrdersStore.orderItemsData" :key="cartItem.id" :orderedItem="cartItem" />
+                <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
+                    <template #loading>
+                        <h3 class="text-center">讀取中。。。</h3>
+                    </template>
+                </TriState>
+            </div>
+        </LoginCheck>
+    </template>
+    <h3 class="text-center" v-else>你還沒下單喔，趕快下單吧！</h3>
 </template>

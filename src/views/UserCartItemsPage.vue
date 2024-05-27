@@ -56,32 +56,36 @@ const onDelete = (cItem: CartItemSchema) => {
 
 <template>
     <LoginCheck>
-        <div class="container bg-light" ref="loader" style="min-height: 80vh;">
-            <div class="d-flex flex-row flex-fill">
-                <input class="form-check-input me-2" type="checkbox" :checked="allSelected" @click="selectAll">
-                <label class="form-label">全選</label>
+        <h2 class="text-center">購物車</h2>
+        <template v-if="userCartItemsStore.cartItemsData.length > 0">
+            <div class="container bg-light" ref="loader" style="min-height: 80vh;">
+                <div class="d-flex flex-row flex-fill">
+                    <input class="form-check-input me-2" type="checkbox" :checked="allSelected" @click="selectAll">
+                    <label class="form-label">全選</label>
+                </div>
+                <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)"
+                :checked="selectedItems.findIndex((cItem) => cItem.id == cartItem.id) > -1" @deleted="onDelete"/>
+                <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
+                    <template #loading>
+                        <h3 class="text-center">讀取中。。。</h3>
+                    </template>
+                </TriState>
             </div>
-            <CartItemRow v-for="cartItem in userCartItemsStore.cartItemsData" :key="cartItem.id" :cart-item="cartItem" @checked-changed="selectedItemsOnChange(cartItem)"
-            :checked="selectedItems.findIndex((cItem) => cItem.id == cartItem.id) > -1" @deleted="onDelete"/>
-            <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
-                <template #loading>
-                    <h3 class="text-center">讀取中。。。</h3>
-                </template>
-            </TriState>
-        </div>
-        <div class="container fixed-bottom">
-            <div class="container bg-light">
-                <div class="row">
-                    <div class="col-8">
-                        <h5 class="text-start mt-3 align-start">總價：${{ totalPrice }}</h5>
-                    </div>
-                    <div class="col-4">
-                        <div class="d-flex">
-                            <button class="btn btn-danger align-end">點我下單</button>
+            <div class="container fixed-bottom">
+                <div class="container bg-light">
+                    <div class="row">
+                        <div class="col-8">
+                            <h5 class="text-start mt-3 align-start">總價：${{ totalPrice }}</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="d-flex">
+                                <button class="btn btn-danger align-end">點我下單</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </template>
+        <h3 class="text-center" v-else>你的購物車空空如也：）</h3>
     </LoginCheck>
 </template>
