@@ -73,11 +73,14 @@ export interface ItemSchema extends BaseSchema {
     count: number,
     price: number,
     need_18: boolean,
-    icon: string | null
+    icon: string | null,
+    average_stars: number,
+    comment_counts: number
 }
 
 export interface CUCommentSchema {
-    content: string
+    content: string | null
+    stars: number
 }
 
 export interface CommentSchema extends BaseSchema, CUCommentSchema {

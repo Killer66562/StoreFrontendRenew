@@ -10,7 +10,7 @@ defineProps<{
 
 <template>
     <div class="row mb-3" v-if="store">
-        <div class="col-3 col-md-1">
+        <div class="col-3 col-md-2 col-xl-1">
             <template v-if="store.id == Infinity">
                 <img class="img-fluid rounded-circle" :src="ownLink" style="aspect-ratio: 1 / 1;"  v-if="ownLink">
                 <img class="img-fluid rounded-circle" src="/src/assets/store.png" style="aspect-ratio: 1 / 1;" v-else>
@@ -24,10 +24,10 @@ defineProps<{
                 <img class="img-fluid rounded-circle" src="/src/assets/store.png" style="aspect-ratio: 1 / 1;" v-else>
             </template>
         </div>
-        <div class="col-9 col-md-11">
+        <div class="col-9 col-md-10 col-xl-11">
             <div class="d-flex flex-column h-100 justify-content-end">
-                <h4>{{ store?.name }}</h4>
-                <p>{{ store?.introduction }}</p>
+                <h4 class="text-truncate">{{ store?.name }}</h4>
+                <p class="text-truncate">{{ store?.introduction }}</p>
             </div>
         </div>
     </div>

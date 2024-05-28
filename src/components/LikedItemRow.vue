@@ -33,7 +33,7 @@ const deleteLikedItem = async () => {
 </script>
 
 <template>
-        <div class="row bg-light pt-1 pb-1">
+        <div class="row pt-1 pb-1">
             <div class="col-9 col-sm-10 col-md-10">
                 <RouterLink :to="`/items/${likedItem.item.id}`" class="text-decoration-none">
                     <div class="row">

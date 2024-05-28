@@ -76,6 +76,7 @@ const addToLikedItems = async () => {
             <h3 class="mb-3">{{ item.name }}</h3>
             <h4 class="text-danger mb-3">${{ item.price }}</h4>
             <h5 class="mb-3">還剩{{ item.count }}個</h5>
+            <p class="mb-3">Rating: {{ item.average_stars }}⭐</p>
             <div class="input-group-sm">
                 <span class="input-group-text">數量</span>
                 <input type="number" min="1" step="1" class="form-control" placeholder="數量" v-model="data.count">

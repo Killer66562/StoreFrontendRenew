@@ -32,7 +32,7 @@ const deleteCartItem = async () => {
 
 <template>
     <LoginCheck>
-        <div class="row bg-light">
+        <div class="row">
             <div class="col-sm-auto d-flex align-items-center">
                 <div class="pb-2">
                     <input type="checkbox" class="form-check-input align-middle" @click="emits('checkedChanged')" :value="cartItem" :checked="checked" />

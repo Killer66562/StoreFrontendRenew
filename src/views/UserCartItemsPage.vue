@@ -58,7 +58,7 @@ const onDelete = (cItem: CartItemSchema) => {
     <LoginCheck>
         <h2 class="text-center">購物車</h2>
         <template v-if="userCartItemsStore.cartItemsData.length > 0">
-            <div class="container bg-light" ref="loader" style="min-height: 80vh;">
+            <div class="container" ref="loader">
                 <div class="d-flex flex-row flex-fill">
                     <input class="form-check-input me-2" type="checkbox" :checked="allSelected" @click="selectAll">
                     <label class="form-label">全選</label>
