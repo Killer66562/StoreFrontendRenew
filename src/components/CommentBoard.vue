@@ -7,6 +7,9 @@ import { ref } from 'vue';
 import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 import LoginCheck from './LoginCheck.vue';
+import { useToast } from 'vue-toast-notification';
+
+const toast = useToast();
 
 const props = defineProps<{
     item: ItemSchema
@@ -30,9 +33,11 @@ const sendComment = async () => {
     const apiInstance = new ApiInstance();
     try {
         await apiInstance.put(`/general/items/${props.item.id}/comments`, data.value);
+        toast.success("留言已送出");
         emits("commentsUpudate");
     }
     catch (err) {
+        toast.error("留言送出失敗");
         throw err;
     }
 }

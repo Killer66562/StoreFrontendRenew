@@ -3,7 +3,8 @@ import { FullItemSchema } from '../models';
 import { getStaticFile } from '../funcs';
 
 defineProps<{
-    item: FullItemSchema
+    item: FullItemSchema,
+    show?: boolean
 }>();
 </script>
 
@@ -16,8 +17,7 @@ defineProps<{
                 <h5 class="card-title">{{ item.name }}</h5>
                 <p class="card-text text-truncate">🏪{{ item.store.name }}</p>
                 <h6 class="card-subtitle mb-2 text-danger">${{ item.price }}</h6>
-                <VRating color="danger" size="x-small" readonly v-model="item.average_stars" half-increments />
-                <p class="card-text text-truncate">{{ item.average_stars }}/5⭐ {{ item.comment_counts }}💬</p>
+                <VRating color="danger" size="x-tiny" readonly v-model="item.average_stars" half-increments />
             </div>
         </div>
     </RouterLink>

@@ -74,8 +74,7 @@ export interface ItemSchema extends BaseSchema {
     price: number,
     need_18: boolean,
     icon: string | null,
-    average_stars: number,
-    comment_counts: number
+    average_stars: number
 }
 
 export interface CUCommentSchema {
@@ -96,7 +95,8 @@ export interface PageSchema<T> {
     items: T[],
     page: number,
     pages: number,
-    size: number
+    size: number,
+    total?: number
 }
 
 export interface FullDistrictSchema extends DistrictSchema {
@@ -133,7 +133,7 @@ export interface ItemImageSchema extends BaseSchema {
 export interface FullItemSchema extends ItemSchema {
     store: StoreSchema,
     images: ItemImageSchema[],
-    comments: FullCommentSchema[]
+    comment_counts: number
 }
 
 export interface CartItemSchema extends BaseSchema {

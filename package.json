@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/bootstrap": "^5.2.10",
     "@types/node": "^20.12.12",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",

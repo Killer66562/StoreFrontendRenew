@@ -5,7 +5,8 @@ import { computed, ref } from 'vue';
 import CartItemRow from '../components/CartItemRow.vue';
 import TriState from '../components/TriState.vue';
 import LoginCheck from '../components/LoginCheck.vue';
-import { CartItemSchema } from '../models';
+import { CUOrderSchema, CartItemSchema } from '../models';
+import CreateOrdersModal from '../components/CreateOrdersModal.vue';
 
 const loader = ref();
 const userCartItemsStore = useUserCartItemsStore();
@@ -13,6 +14,7 @@ const userCartItemsStore = useUserCartItemsStore();
 const fetchState = useAsyncState(() => userCartItemsStore.fetchCartItems(), undefined, { immediate: false });
 
 const selectedItems = ref<CartItemSchema[]>([]);
+const createdOrders = ref<CUOrderSchema[]>([]);
 
 const selectedItemsOnChange = (cItem: CartItemSchema) => {
     const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
@@ -52,10 +54,15 @@ const onDelete = (cItem: CartItemSchema) => {
         selectedItems.value.splice(idx, 1);
     fetchState.execute();
 }
+
+const showModal = () => {
+    
+}
 </script>
 
 <template>
     <LoginCheck>
+        <CreateOrdersModal :created-orders="createdOrders" :modal-id="`orderModal`"/>
         <h2 class="text-center">購物車</h2>
         <template v-if="userCartItemsStore.cartItemsData.length > 0">
             <div class="container" ref="loader">

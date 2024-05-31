@@ -17,7 +17,7 @@ const emits = defineEmits<{
 <template>
     <template v-if="items.length > 0">
         <div class="row">
-            <div class="col-6 col-sm-4 col-md-3 col-xl-2 mb-3" v-for="item in items" >
+            <div class="col-6 col-md-4 col-lg-3 col-xxl-2 mb-3" v-for="item in items">
                 <ItemCard :item="item" :key="item.id" />
             </div>
         </div>

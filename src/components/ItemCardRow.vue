@@ -10,7 +10,7 @@ defineProps<{
 <template>
     <template v-if="items.length > 0">
         <div class="row flex-nowrap overflow-auto mb-3">
-            <div class="col-6 col-sm-4-col-md-3 col-xl-2" v-for="item in items" :key="item.id">
+            <div class="col-6 col-md-4 col-lg-3 col-xxl-2" v-for="item in items" :key="item.id">
                 <ItemCard :item="item"/>
             </div>
         </div>

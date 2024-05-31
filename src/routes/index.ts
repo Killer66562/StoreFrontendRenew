@@ -1,9 +1,13 @@
 import { createRouter, RouteRecordRaw, RouterOptions, createWebHashHistory } from "vue-router";
+import HomePage from "../views/HomePage.vue";
 
 const routes: RouteRecordRaw[] = [
     {
         path: "/",
-        component: () => import('../views/HomePage.vue')
+        component: HomePage,
+        meta: {
+            KeepAlive: true
+        }
     },
     {
         path: "/items",
