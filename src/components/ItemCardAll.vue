@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { FullItemSchema } from '../models';
 import ItemCard from './ItemCard.vue';
+import { useIntersectionObserver } from '@vueuse/core';
 
 defineProps<{
     items: FullItemSchema[],
@@ -9,9 +11,19 @@ defineProps<{
     error?: any
 }>();
 
+const target = ref(null);
+
 const emits = defineEmits<{
     loadMore: []
 }>();
+
+useIntersectionObserver(
+  target,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting === true)
+        emits('loadMore');
+  },
+)
 </script>
 
 <template>
@@ -21,7 +33,7 @@ const emits = defineEmits<{
                 <ItemCard :item="item" :key="item.id" />
             </div>
         </div>
-        <div class="row">
+        <div class="row" ref="target">
             <h5 class="text-center" v-if="error">載入失敗，請重試。</h5>
             <button type="button" class="btn btn-warning" @click="emits('loadMore')" v-if="canLoadMore" :disabled="loading">載入更多</button>
         </div>

@@ -155,6 +155,11 @@ export interface CUOrderSchema {
     note: string | null
 }
 
+export interface CIOrderSchema {
+    cartItem: CartItemSchema,
+    order: CUOrderSchema
+}
+
 export interface OrderSchema extends BaseSchema, CUOrderSchema {
     item: ItemSchema,
     item_id: number,

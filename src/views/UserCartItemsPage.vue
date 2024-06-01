@@ -5,16 +5,18 @@ import { computed, ref } from 'vue';
 import CartItemRow from '../components/CartItemRow.vue';
 import TriState from '../components/TriState.vue';
 import LoginCheck from '../components/LoginCheck.vue';
-import { CUOrderSchema, CartItemSchema } from '../models';
-import CreateOrdersModal from '../components/CreateOrdersModal.vue';
+import { CartItemSchema } from '../models';
+import { useUserCreateOrdersStore } from '../stores/userCreateOrdersStore';
+import { router } from '../routes';
+import { useToast } from 'vue-toast-notification';
 
 const loader = ref();
 const userCartItemsStore = useUserCartItemsStore();
+const userCreateOrdersStore = useUserCreateOrdersStore();
 
 const fetchState = useAsyncState(() => userCartItemsStore.fetchCartItems(), undefined, { immediate: false });
 
 const selectedItems = ref<CartItemSchema[]>([]);
-const createdOrders = ref<CUOrderSchema[]>([]);
 
 const selectedItemsOnChange = (cItem: CartItemSchema) => {
     const idx = selectedItems.value.findIndex((cartItem) => cartItem.id == cItem.id);
@@ -55,14 +57,21 @@ const onDelete = (cItem: CartItemSchema) => {
     fetchState.execute();
 }
 
-const showModal = () => {
-    
+const gotoCreateOrdersPage = async () => {
+    if (selectedItems.value.length > 0) {
+        userCreateOrdersStore.generateOrders(selectedItems.value);
+        await router.push("/user/create-orders");
+    }
+    else {
+        const toast = useToast();
+        toast.warning("請先選擇商品");
+    }
+        
 }
 </script>
 
 <template>
     <LoginCheck>
-        <CreateOrdersModal :created-orders="createdOrders" :modal-id="`orderModal`"/>
         <h2 class="text-center">購物車</h2>
         <template v-if="userCartItemsStore.cartItemsData.length > 0">
             <div class="container" ref="loader">
@@ -85,8 +94,8 @@ const showModal = () => {
                             <h5 class="text-start mt-3 align-start">總價：${{ totalPrice }}</h5>
                         </div>
                         <div class="col-4">
-                            <div class="d-flex">
-                                <button class="btn btn-danger align-end">點我下單</button>
+                            <div class="d-flex flex-row justify-content-end">
+                                <button type="button" class="btn btn-danger align-bottom" @click="gotoCreateOrdersPage">點我下單</button>
                             </div>
                         </div>
                     </div>

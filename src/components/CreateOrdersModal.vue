@@ -1,10 +1,23 @@
 <script setup lang="ts">
-import { CUOrderSchema } from '../models';
+import { CUOrderSchema, CartItemSchema } from '../models';
+import { getStaticFile } from '../funcs';
+import { ref } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     modalId: string,
-    createdOrders: CUOrderSchema[]
+    cartItems: CartItemSchema[]
 }>();
+
+const arr = ref<CUOrderSchema[]>([]);
+
+props.cartItems.forEach(element => {
+    arr.value[element.id] = {
+        item_id: element.item.id,
+        count: element.count,
+        address: "",
+        note: null
+    }
+});
 
 </script>
 
@@ -17,7 +30,23 @@ defineProps<{
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Modal body text goes here.</p>
+                    <div class="container-fluid">
+                        <template v-for="cartItem in cartItems">
+                            <p>{{ cartItem.item.store }}</p>
+                            <div class="row">
+                                <div class="col-2">
+                                    <img class="img-fluid" :src="getStaticFile(cartItem.item.icon)" :alt="`item #${cartItem.item.id}`" v-if="cartItem.item.icon">
+                                    <img class="img-fluid" src="/src/assets/item.jpg" :alt="`item #${cartItem.item.id}`" v-else>
+                                </div>
+                                <div class="col-10">
+                                    <h5>{{ cartItem.item.name }}</h5>
+                                    <h6 class="text-danger">${{ cartItem.item.price }}</h6>
+                                    <input type="text" class="form-control" v-model="arr[cartItem.id].address">
+                                    <input type="text" class="form-control" v-model="arr[cartItem.id].note">
+                                </div>
+                            </div>
+                        </template>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
