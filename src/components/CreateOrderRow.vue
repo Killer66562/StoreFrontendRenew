@@ -6,6 +6,10 @@ defineProps<{
     order: CIOrderSchema
 }>();
 
+const emits = defineEmits<{
+    fillAddress: [string]
+}>();
+
 </script>
 
 <template>
@@ -26,6 +30,9 @@ defineProps<{
         <div class="mb-3">
             <label class="form-label">備註</label>
             <input type="text" class="form-control form-control-sm" v-model="order.order.note">
+        </div>
+        <div class="mb-3">
+            <button type="button" class="btn btn-sm btn-outline-dark" @click="emits('fillAddress', order.order.address)">為所有訂單套用此訂單使用的地址</button>
         </div>
     </div>
 </template>

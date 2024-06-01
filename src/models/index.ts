@@ -161,10 +161,9 @@ export interface CIOrderSchema {
 }
 
 export interface OrderSchema extends BaseSchema, CUOrderSchema {
-    item: ItemSchema,
-    item_id: number,
     user_id: number,
-    count: number
+    item: ItemSchema,
+    status: number
 } 
 
 export interface UserQuerySchema {

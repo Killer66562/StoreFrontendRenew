@@ -23,7 +23,7 @@ export const useUserCreateOrdersStore = defineStore("userCreateOrdersStore", () 
             realOrders.push(realOrder.order);
         });
         try {
-            await apiInstance.post("/user/orders", orders.value);
+            await apiInstance.post("/user/orders", realOrders);
             resetOrders();
         }
         catch (err) {
