@@ -4,7 +4,7 @@ import { getErrorMessage, getStaticFile } from '../funcs';
 import { RegisterSchema } from '../models';
 import { computed, ref } from 'vue';
 import LoginCheck from '../components/LoginCheck.vue';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 
 const userDataStore = useUserDataStore();

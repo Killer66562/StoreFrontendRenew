@@ -51,6 +51,7 @@ const store = computed<StoreSchema>(() => {
         introduction: data.value.introduction,
         icon: iconUrl.value,
         district_id: data.value.district_id ? data.value.district_id : Infinity,
+        user_id: 0,
         created_at: new Date()
     }
 });

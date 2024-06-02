@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { CIOrderSchema, CUOrderSchema, CartItemSchema } from "../models";
-import { ApiInstance } from "../api";
+import { ApiInstance } from "../api/apiInstance";
 
 export const useUserCreateOrdersStore = defineStore("userCreateOrdersStore", () => {
     const orders = ref<CIOrderSchema[]>([]);

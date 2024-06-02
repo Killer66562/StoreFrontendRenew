@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import LoginCheck from '../components/LoginCheck.vue';
 import { FullOrderSchema, PageSchema } from '../models';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 import StoreOrderRow from '../components/StoreOrderRow.vue'
 

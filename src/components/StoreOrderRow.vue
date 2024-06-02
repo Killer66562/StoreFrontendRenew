@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FullOrderSchema } from '../models';
 import { getErrorMessage, getStaticFile } from '../funcs';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { useAsyncState } from '@vueuse/core';
 import { getOrderStatusText } from '../funcs';
