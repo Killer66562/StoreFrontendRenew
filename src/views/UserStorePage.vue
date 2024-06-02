@@ -27,7 +27,10 @@ fetchState.execute();
                 <template v-if="userStoreStore.userStoreData">
                     <StoreInfo :store="userStoreStore.userStoreData" />
                     <div class="mb-3">
-                        <RouterLink to="/user/create-item">點我上架新商品</RouterLink>
+                        <RouterLink to="/user/create-item">點我上架新商品</RouterLink>                    
+                    </div>
+                    <div class="mb-3">
+                        <RouterLink to="/user/store-orders">查看訂單</RouterLink>
                     </div>
                     <div class="d-flex flex-row justify-content-end mb-3">
                         <div class="me-3">

@@ -54,7 +54,8 @@ export interface StoreSchema extends BaseSchema {
     name: string,
     introduction: string,
     district_id: number,
-    icon: string | null
+    icon: string | null,
+    user_id: number
 }
 
 export interface CUItemSchema {
@@ -176,4 +177,8 @@ export interface UserQuerySchema {
     created_at_end?: Date,
     sort_by?: "id" | "username" | "email" | "birthday" | "created_at",
     desc?: boolean,
+}
+
+export interface FullOrderSchema extends OrderSchema {
+    owner: UserSchema
 }

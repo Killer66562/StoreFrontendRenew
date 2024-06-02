@@ -48,7 +48,11 @@ handler();
 
 <template>
     <TriState :loading="rootStore.isLoading" :ready="rootStore.isReady" :error="rootStore.error" @ready="onReady" @error="emits('notLogin')">
-        <template #loading></template>
+        <template #loading>
+            <slot name="loading">
+                <h2 class="text-center">載入中。。。</h2>
+            </slot>
+        </template>
         <template #ready>
             <slot name="notLogin" v-if="userDataStore.userData === undefined"></slot>
             <slot v-else></slot>

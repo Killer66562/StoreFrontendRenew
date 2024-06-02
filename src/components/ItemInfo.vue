@@ -7,10 +7,12 @@ import { useToast } from 'vue-toast-notification';
 import { useUserLikedItemsStore } from '../stores/userLikedItemsStore';
 import { useUserCartItemsStore } from '../stores/userCartItemsStore';
 import LoginCheck from './LoginCheck.vue';
+import { useUserDataStore } from '../stores';
 
 const toast = useToast();
 const userLikedItemsStore = useUserLikedItemsStore();
 const userCartItemsStore = useUserCartItemsStore();
+const userStore = useUserDataStore();
 
 const props = defineProps<{
     item: FullItemSchema,
@@ -55,6 +57,14 @@ const addToLikedItems = async () => {
         toast.error(errMessage);
     }
 }
+
+const dropItem = () => {
+    
+}
+
+const fillItem = async () => {
+
+}
 </script>
 
 <template>
@@ -73,10 +83,10 @@ const addToLikedItems = async () => {
             </div>
         </div>
         <div class="col-12 col-sm-6 col-md-9">
-            <h3 class="mb-3">{{ item.name }}</h3>
-            <h4 class="text-danger mb-3">${{ item.price }}</h4>
+            <h4 class="mb-3">{{ item.name }}</h4>
+            <h5 class="text-danger mb-3">${{ item.price }}</h5>
             <h5 class="mb-3">還剩{{ item.count }}個</h5>
-            <p class="mb-3">Rating: {{ item.average_stars }}⭐</p>
+            <VRating color="danger" size="x-tiny" readonly v-model="item.average_stars" half-increments />
             <div class="input-group-sm">
                 <span class="input-group-text">數量</span>
                 <input type="number" min="1" step="1" class="form-control" placeholder="數量" v-model="data.count">
@@ -86,8 +96,12 @@ const addToLikedItems = async () => {
                 </template>
                 <template v-else>
                     <LoginCheck use-own-not-login-handler>
-                        <button class="btn btn-outline-danger" type="button" @click="addToCartItems">加入購物車</button>
-                        <button class="btn btn-outline-success" type="button" @click="addToLikedItems">加入願望清單</button>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-danger" type="button" @click="addToCartItems">加入購物車</button>
+                            <button class="btn btn-sm btn-outline-success" type="button" @click="addToLikedItems">加入願望清單</button>
+                            <button class="btn btn-sm btn-outline-secondary" type="button" @click="dropItem" v-if="userStore.userData?.id == item.store.user_id">下架商品</button>
+                            <button class="btn btn-sm btn-outline-secondary" type="button" @click="fillItem" v-if="userStore.userData?.id == item.store.user_id">補貨</button>
+                        </div>
                     </LoginCheck>
                 </template>
                 <p>{{ item.introduction }}</p>

@@ -17,6 +17,7 @@ defineProps<{
                 <h5 class="card-title">{{ item.name }}</h5>
                 <p class="card-text text-truncate">🏪{{ item.store.name }}</p>
                 <h6 class="card-subtitle mb-2 text-danger">${{ item.price }}</h6>
+                <p class="card-text text-truncate">🏪還剩{{ item.count }}個</p>
                 <VRating color="danger" size="x-tiny" readonly v-model="item.average_stars" half-increments />
             </div>
         </div>

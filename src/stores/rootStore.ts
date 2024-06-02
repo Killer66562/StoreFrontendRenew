@@ -8,6 +8,7 @@ import { useDistrictsStore } from "./districtsStore";
 import { useItemsStore } from "./itemsStore";
 import { useUserCartItemsStore } from "./userCartItemsStore";
 import { useUserLikedItemsStore } from "./userLikedItemsStore";
+import { useUserOrdersStore } from "./userOrdersStore";
 
 export const useRootStore = defineStore("rootStore", () => {
     const tokenStore = useTokenStore();
@@ -18,6 +19,7 @@ export const useRootStore = defineStore("rootStore", () => {
     const itemsStore = useItemsStore();
     const userCartItemsStore = useUserCartItemsStore();
     const userLikedItemsStore = useUserLikedItemsStore();
+    const userOrdersStore = useUserOrdersStore();
 
     const init = async () => {
         try {
@@ -42,7 +44,8 @@ export const useRootStore = defineStore("rootStore", () => {
                     citiesStore.fetchData(),
                     districtsStore.fetchData(),
                     userCartItemsStore.fetchCartItems(),
-                    userLikedItemsStore.fetchLikedItems()
+                    userLikedItemsStore.fetchLikedItems(),
+                    userOrdersStore.fetchOrders()
                 ]);
             }
             catch (err) { throw err; }
@@ -62,6 +65,9 @@ export const useRootStore = defineStore("rootStore", () => {
         citiesStore.resetData();
         districtsStore.resetData();
         itemsStore.resetAll();
+        userCartItemsStore.reset();
+        userOrdersStore.reset();
+        userLikedItemsStore.reset();
 
         try {
             await Promise.all([
@@ -76,7 +82,7 @@ export const useRootStore = defineStore("rootStore", () => {
         isReady.value = true;
         setTimeout(() => {
             isLoading.value = false;
-        }, 1000);
+        }, 500);
     }
 
     const initState = useAsyncState(() => init(), undefined, { immediate: false });

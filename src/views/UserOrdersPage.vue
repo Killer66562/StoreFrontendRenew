@@ -15,14 +15,21 @@ const fetchState = useAsyncState(() => userOrdersStore.fetchOrders(), undefined,
 const onNotLogin = async () => {
     await router.replace("/login");
 }
-
-fetchState.execute();
 </script>
 
 <template>
-    <h2 class="text-center">訂單狀態一覽</h2>
-    <template v-if="userOrdersStore.orderItemsData.length > 0">
-        <LoginCheck @not-login="onNotLogin">
+    <LoginCheck @not-login="onNotLogin">
+        <h2 class="text-center">訂單狀態一覽</h2>
+        <template v-if="userOrdersStore.orderItemsData.length > 0">
+            <div class="row mb-3">
+                <div class="col-3 col-md-2 col-lg-1"></div>
+                <div class="col-6 col-md-6 col-lg-7">
+                    <h4>訂單資訊</h4>
+                </div>
+                <div class="col-3 col-md-2">
+                    <h4>訂單狀態</h4>
+                </div>
+            </div>
             <div class="container" ref="loader">
                 <orderRow v-for="cartItem in userOrdersStore.orderItemsData" :key="cartItem.id" :orderedItem="cartItem" />
                 <TriState :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" :error="fetchState.error.value">
@@ -31,7 +38,7 @@ fetchState.execute();
                     </template>
                 </TriState>
             </div>
-        </LoginCheck>
-    </template>
-    <h3 class="text-center" v-else>你還沒下單喔，趕快下單吧！</h3>
+        </template>
+        <h3 class="text-center" v-else>你還沒下單喔，趕快下單吧！</h3>
+    </LoginCheck>
 </template>

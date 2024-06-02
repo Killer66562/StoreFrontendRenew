@@ -23,8 +23,9 @@ const logout = async () => {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav ms-auto mb-1 mb-lg-0">
+                <ul class="navbar-nav ms-auto mb-1 mb-lg-0 text-dark">
                     <LoginCheck use-own-not-login-handler>
+                        <template #loading>正在讀取資料。。。</template>
                         <li class="nav-item">
                             <RouterLink to="/user/liked-items" class="nav-link active text-center">
                                 <img class="nav-brand" src="/src/assets/heart.png" alt="願望清單" height="24" width="24">
@@ -50,15 +51,18 @@ const logout = async () => {
                                 <img class="nav-brand" src="../assets/user.png" alt="個人資訊" height="24" width="24">
                             </RouterLink>
                         </li>
+                        <li class="nav-item">
+                            <LoginCheck use-own-not-login-handler>
+                                <RouterLink to="/" class="nav-link active text-center" @click="logout">登出</RouterLink>
+                                <template #notLogin>
+                                    <RouterLink class="nav-link active text-center" to="/login">註冊｜登入</RouterLink>
+                                </template>
+                            </LoginCheck>
+                        </li>
+                        <template #notLogin>
+                            <RouterLink class="nav-link active text-center" to="/login">註冊｜登入</RouterLink>
+                        </template>
                     </LoginCheck>
-                    <li class="nav-item">
-                        <LoginCheck use-own-not-login-handler>
-                            <RouterLink to="/" class="nav-link active text-center" @click="logout">登出</RouterLink>
-                            <template #notLogin>
-                                <RouterLink class="nav-link active text-center" to="/login">註冊｜登入</RouterLink>
-                            </template>
-                        </LoginCheck>
-                    </li>
                 </ul>
             </div>
         </div>

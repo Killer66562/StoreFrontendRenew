@@ -101,13 +101,16 @@ const item = computed<FullItemSchema>(() => {
         icon: iconUrl.value,
         images: [],
         comments: [],
+        comment_counts: 0,
+        average_stars: 0,
         store: {
             id: Infinity,
             name: "",
             introduction: "",
             icon: null,
             district_id: Infinity,
-            created_at: new Date()
+            created_at: new Date(),
+            user_id: Infinity
         }
     }
 });

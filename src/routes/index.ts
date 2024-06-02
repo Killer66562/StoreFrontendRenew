@@ -83,6 +83,10 @@ const routes: RouteRecordRaw[] = [
             {
                 component: () => import('../views/UserOrderSendPage.vue'),
                 path: "create-orders"
+            },
+            {
+                component: () => import('../views/UserStoreOrdersPage.vue'),
+                path: "store-orders"
             }
         ]
     },
