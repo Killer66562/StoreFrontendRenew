@@ -53,7 +53,7 @@ fetchState.execute();
                             </select>
                         </div>
                     </div>
-                    <ItemCardAll :items="userStoreItemsStore.itemsData" :loading="fetchState.isLoading.value" :error="fetchState.error.value" :canLoadMore="userStoreItemsStore.canLoadMore" @loadMore="fetchState.execute" />
+                    <ItemCardAll :items="userStoreItemsStore.itemsData" :loading="fetchState.isLoading.value" :error="fetchState.error.value" :ready="fetchState.isReady.value" :canLoadMore="userStoreItemsStore.canLoadMore" @loadMore="fetchState.execute" />
                 </template>
                 <template v-else>
                     <h2 class="text-center">你還沒有建立自己的拍賣小舖喔</h2>

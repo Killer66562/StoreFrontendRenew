@@ -7,12 +7,17 @@ import { useToast } from 'vue-toast-notification';
 import { useUserLikedItemsStore } from '../stores/userLikedItemsStore';
 import { useUserCartItemsStore } from '../stores/userCartItemsStore';
 import LoginCheck from './LoginCheck.vue';
+import { router } from '../routes';
 import { useUserDataStore } from '../stores';
 
 const toast = useToast();
 const userLikedItemsStore = useUserLikedItemsStore();
 const userCartItemsStore = useUserCartItemsStore();
-const userStore = useUserDataStore();
+const userDataStore = useUserDataStore();
+
+const emits = defineEmits<{
+    report: []
+}>();
 
 const props = defineProps<{
     item: FullItemSchema,
@@ -58,12 +63,8 @@ const addToLikedItems = async () => {
     }
 }
 
-const dropItem = () => {
-    
-}
-
-const fillItem = async () => {
-
+const gotoEditPage = async () => {
+    await router.push(`/user/edit-item/${props.item.id}`);
 }
 </script>
 
@@ -99,8 +100,8 @@ const fillItem = async () => {
                         <div class="btn-group">
                             <button class="btn btn-sm btn-outline-danger" type="button" @click="addToCartItems">加入購物車</button>
                             <button class="btn btn-sm btn-outline-success" type="button" @click="addToLikedItems">加入願望清單</button>
-                            <button class="btn btn-sm btn-outline-secondary" type="button" @click="dropItem" v-if="userStore.userData?.id == item.store.user_id">下架商品</button>
-                            <button class="btn btn-sm btn-outline-secondary" type="button" @click="fillItem" v-if="userStore.userData?.id == item.store.user_id">補貨</button>
+                            <button class="btn btn-sm btn-outline-dark" type="button" @click="emits('report')" >顯示/隱藏檢舉商品表單</button>
+                            <button class="btn btn-sm btn-outline-secondary" type="button" @click="gotoEditPage" v-if="item.store.user_id == userDataStore.userData?.id">更新商品資訊</button>
                         </div>
                     </LoginCheck>
                 </template>

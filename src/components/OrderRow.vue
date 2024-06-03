@@ -13,6 +13,10 @@ const props = defineProps<{
     orderedItem: OrderSchema
 }>();
 
+const emits = defineEmits<{
+    orderDel: [number]
+}>();
+
 const deleteOrder = async () => {
     const apiInstance = new ApiInstance();
     const toast = useToast();
@@ -44,7 +48,8 @@ const deleteOrderState = useAsyncState(() => deleteOrder(), undefined, { immedia
         <div class="col-6 col-md-6 col-lg-7">
             <h5 class="text-break">{{ orderedItem.item.name }}</h5>
             <div>數量：{{ orderedItem.count }}</div>
-            <h6 class="text-danger">總價：${{ orderedItem.item.price * orderedItem.count }}</h6>
+            <div class="text-danger">總價：${{ orderedItem.total_price}}</div>
+            <div>送貨地址：{{ orderedItem.address }}</div>
         </div>
         <div class="col-3 col-md-2">
             <h6 class="align-text-break">{{ getOrderStatusText(orderedItem.status) }}</h6>

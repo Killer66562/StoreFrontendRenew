@@ -164,7 +164,8 @@ export interface CIOrderSchema {
 export interface OrderSchema extends BaseSchema, CUOrderSchema {
     user_id: number,
     item: ItemSchema,
-    status: number
+    status: number,
+    total_price: number
 } 
 
 export interface UserQuerySchema {
@@ -181,4 +182,9 @@ export interface UserQuerySchema {
 
 export interface FullOrderSchema extends OrderSchema {
     owner: UserSchema
+}
+
+export interface CUItemReportSchema {
+    reported_item_id: number,
+    reason: string
 }

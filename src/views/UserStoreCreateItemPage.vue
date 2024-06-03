@@ -138,11 +138,11 @@ const onNotLogin = async () => {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">商品價格</label>
-                        <input min="0" class="form-control" type="number" v-model="data.price" required>
+                        <input min="0" class="form-control" type="number" v-model="data.price" required max="100000">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">商品數量</label>
-                        <input min="1" class="form-control" type="number" v-model="data.count" required>
+                        <input min="1" class="form-control" type="number" v-model="data.count" required max="20000">
                     </div>
                 </div>
                 <div class="col-12 col-md-8 mb-3">

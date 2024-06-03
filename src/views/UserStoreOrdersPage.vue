@@ -31,6 +31,14 @@ const orderOnDelete = (orderId: number) => {
         storeOrdersStore.data.splice(orderIndex, 1);
 }
 
+const orderOnUpdate = (orderId: number) => {
+  const order = storeOrdersStore.data.find((ord) => {
+        return ord.id == orderId
+    });
+    if (order)
+      order.status = 3;
+}
+
 onBeforeMount(() => {
   storeOrdersStore.reset();
 });
@@ -40,7 +48,7 @@ onBeforeMount(() => {
     <LoginCheck>
         <h2 class="text-center">商店訂單一覽</h2>
         <div ref="root">
-            <StoreOrderRow :ordered-item="order" v-for="order in storeOrdersStore.data" :key="order.id" @order-delete="orderOnDelete"/>
+            <StoreOrderRow :ordered-item="order" v-for="order in storeOrdersStore.data" :key="order.id" @order-delete="orderOnDelete" @order-update="orderOnUpdate"/>
             <div ref="target">
                 <TriState :loading="loadState.isLoading.value" :ready="loadState.isReady.value" :error="loadState.error.value">
                   <template #loading>

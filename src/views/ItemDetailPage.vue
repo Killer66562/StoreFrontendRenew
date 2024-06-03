@@ -8,6 +8,7 @@ import { ApiInstance } from '../api/apiInstance';
 import { useAsyncState } from '@vueuse/core';
 import StoreInfo from '../components/StoreInfo.vue';
 import CommentBoard from '../components/CommentBoard.vue';
+import ItemReportForm from '../components/ItemReportForm.vue';
 
 const item = ref<FullItemSchema>();
 const comments = ref<FullCommentSchema[]>([]);
@@ -43,7 +44,7 @@ const fetchComments = async () => {
 const fetchState = useAsyncState(() => fetchItem(), undefined, { immediate: false });
 const fetchCommentState = useAsyncState(() => fetchComments(), undefined, { immediate: false });
 
-fetchState.execute();
+fetchState.execute(500);
 fetchCommentState.execute();
 
 const commentsUpdate = () => {
@@ -53,7 +54,9 @@ const commentsUpdate = () => {
 
 const canLoadMore = computed<boolean>(() => {
     return page.value <= pages.value;
-})
+});
+
+const show = ref<boolean>(false);
 </script>
 
 <template>
@@ -63,7 +66,8 @@ const canLoadMore = computed<boolean>(() => {
         </template>
         <template #ready>
             <template v-if="item">
-                <ItemInfo :item="item"/>
+                <ItemInfo :item="item" @report="show = !show"/>
+                <ItemReportForm :item="item" v-show="show"></ItemReportForm>
                 <StoreInfo :store="item.store" />
                 <h4>留言板</h4>
                 <p>共 {{ commentCount }} 則留言</p>

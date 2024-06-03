@@ -58,7 +58,8 @@ const deleteOrderState = useAsyncState(() => deleteOrder(), undefined, { immedia
             <h5 class="text-break">{{ orderedItem.item.name }}</h5>
             <div>下單人：{{ orderedItem.owner.username }}</div>
             <div>數量：{{ orderedItem.count }}</div>
-            <h6 class="text-danger">總價：${{ orderedItem.item.price * orderedItem.count }}</h6>
+            <div class="text-danger">總價：${{ orderedItem.total_price }}</div>
+            <div>送貨地址：{{ orderedItem.address }}</div>
         </div>
         <div class="col-3 col-md-2">
             <h6 class="align-text-break">{{ getOrderStatusText(orderedItem.status) }}</h6>
