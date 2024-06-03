@@ -1,40 +1,66 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import LoginCheck from '../components/LoginCheck.vue';
-import { FullOrderSchema, PageSchema } from '../models';
-import { ApiInstance } from '../api/apiInstance';
-import { useAsyncState } from '@vueuse/core';
+import { useAsyncState, useIntersectionObserver } from '@vueuse/core';
 import StoreOrderRow from '../components/StoreOrderRow.vue'
+import { useStoreOrdersStore } from '../stores/storeOrdersStore';
+import { onBeforeMount, ref } from 'vue';
+import LoginCheck from '../components/LoginCheck.vue';
 
-const orders = ref<FullOrderSchema[]>([]);
+const root = ref(null);
+const upperTarget = ref(null);
+const lowerTarget = ref(null);
 
-const fetchOrders = async () => {
-    const apiInstance = new ApiInstance();
-    try {
-        const fetchedData: PageSchema<FullOrderSchema> = await apiInstance.get("/user/store/orders", { page: 1 });
-        orders.value.push(...fetchedData.items);
-    }
-    catch (err) {
-        throw err;
-    }
-}
+const emits = defineEmits<{
+    loadMore: []
+}>();
 
-const fetchState = useAsyncState(() => fetchOrders(), undefined, { immediate: false });
+useIntersectionObserver(
+  upperTarget,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting === true)
+        loadUpperState.execute();
+  },
+  {
+    immediate: true,
+    root: root
+  }
+);
+
+useIntersectionObserver(
+  lowerTarget,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting === true)
+        loadLowerState.execute();
+  },
+  {
+    immediate: true,
+  }
+);
+
+const storeOrdersStore = useStoreOrdersStore();
+
+const loadUpperState = useAsyncState(() => storeOrdersStore.loadUpper(), undefined, { immediate: false });
+const loadLowerState = useAsyncState(() => storeOrdersStore.loadLower(), undefined, { immediate: false });
 
 const orderOnDelete = (orderId: number) => {
-    const orderIndex = orders.value.findIndex((ord) => {
+    const orderIndex = storeOrdersStore.data.findIndex((ord) => {
         return ord.id == orderId
     });
     if (orderIndex >= 0)
-        orders.value.splice(orderIndex, 1);
+        storeOrdersStore.data.splice(orderIndex, 1);
 }
 
-fetchState.execute();
+onBeforeMount(() => {
+    storeOrdersStore.pageSwitch();
+})
 </script>
 
 <template>
     <LoginCheck>
         <h2 class="text-center">商店訂單一覽</h2>
-        <StoreOrderRow :ordered-item="order" v-for="order in orders" :key="order.id" @order-delete="orderOnDelete"/>
+        <div ref="root">
+            <div class="mb-3" ref="upperTarget"></div>
+            <StoreOrderRow :ordered-item="order" v-for="order in storeOrdersStore.data" :key="order.id" @order-delete="orderOnDelete"/>
+            <div class="mt-3" ref="lowerTarget"></div>
+            </div>
     </LoginCheck>
 </template>
