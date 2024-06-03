@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { CUItemReportSchema, FullItemSchema } from '../models';
-import { ApiInstance } from '../api';
+import { ApiInstance } from '../api/apiInstance';
 import { useToast } from 'vue-toast-notification';
 import { getErrorMessage } from '../funcs';
 import { useAsyncState } from '@vueuse/core';

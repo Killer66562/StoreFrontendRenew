@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { FullOrderSchema, PageSchema } from "../models";
-import { ApiInstance } from "../api";
+import { ApiInstance } from "../api/apiInstance";
 
 export const useStoreOrdersStore = defineStore("storeOrdersStore", () => {
     const data = ref<FullOrderSchema[]>([]);
