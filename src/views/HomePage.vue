@@ -4,10 +4,13 @@ import ItemCardRow from '../components/ItemCardRow.vue';
 import { useAsyncState } from '@vueuse/core';
 import InitCheck from '../components/InitCheck.vue';
 import ItemCardAll from '../components/ItemCardAll.vue';
+import { onUnmounted } from 'vue';
 
 const itemsStore = useItemsStore();
 
 const fetchState = useAsyncState(() => itemsStore.fetchItemsData(), undefined, { immediate: false })
+
+onUnmounted(() => itemsStore.resetFetchedData());
 </script>
 
 <template>
@@ -26,7 +29,7 @@ const fetchState = useAsyncState(() => itemsStore.fetchItemsData(), undefined, {
     <h2>商品一覽</h2>
     <InitCheck>
         <template #ready>
-            <ItemCardAll :items="itemsStore.itemsData" :can-load-more="itemsStore.canLoadMore" :error="fetchState.error.value" :loading="fetchState.isLoading.value" @load-more="fetchState.execute" />
+            <ItemCardAll :items="itemsStore.itemsData" :can-load-more="itemsStore.canLoadMore" :error="fetchState.error.value" :loading="fetchState.isLoading.value" :ready="fetchState.isReady.value" @load-more="fetchState.execute" />
         </template>
     </InitCheck>
 </template>

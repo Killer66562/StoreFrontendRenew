@@ -35,6 +35,11 @@ export const useItemsStore = defineStore("itemsStore", () => {
             ++page.value;
         }
     }
+    const resetFetchedData = () => {
+        page.value = 1;
+        pages.value = Infinity;
+        itemsData.value = [];
+    }
     const resetAll = () => {
         page.value = 1;
         pages.value = Infinity;
@@ -44,5 +49,5 @@ export const useItemsStore = defineStore("itemsStore", () => {
         likedItems.value = [];
         itemsData.value = [];
     }
-    return { inited, hotItems, bestItems, likedItems, itemsData, fetchHotItems, fetchBestItems, fetchLikedItems, fetchItemsData, resetAll, canLoadMore };
+    return { inited, hotItems, bestItems, likedItems, itemsData, fetchHotItems, fetchBestItems, fetchLikedItems, fetchItemsData, resetAll, canLoadMore, resetFetchedData };
 });
