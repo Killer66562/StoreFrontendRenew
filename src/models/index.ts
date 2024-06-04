@@ -188,3 +188,13 @@ export interface CUItemReportSchema {
     reported_item_id: number,
     reason: string
 }
+
+export interface CUAdSchema {
+    url: string,
+    icon: File | null
+}
+
+export interface AdSchema extends BaseSchema {
+    url: string,
+    icon: string | null
+}
