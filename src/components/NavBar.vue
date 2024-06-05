@@ -3,7 +3,16 @@ import { router } from '../routes';
 import LoginCheck from '../components/LoginCheck.vue';
 import { useToast } from 'vue-toast-notification';
 import { useRootStore } from '../stores/rootStore';
+import { useSearchStore } from '../stores/searchStore';
+
 const rootStore = useRootStore();
+const searchStore = useSearchStore();
+
+const search = async () => {
+    searchStore.searchNow = true;
+    await router.push("/items");
+}
+
 const logout = async () => {
     rootStore.reset();
     const toast = useToast();
@@ -71,8 +80,8 @@ const logout = async () => {
         <div class="container">
             <div class="input-group mb-3">
                 <span class="input-group-text">全站搜尋</span>
-                <input type="text" class="form-control" aria-label="Sizing example input" placeholder=":)">
-                <button class="btn btn-success" type="button">GO</button>
+                <input type="text" class="form-control" placeholder="找商品？" v-model="searchStore.query.name">
+                <button class="btn btn-success" type="button" @click="search" :disabled="searchStore.searchNow === true">GO</button>
             </div>
         </div>
     </div>

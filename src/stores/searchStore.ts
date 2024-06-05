@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { ApiInstance } from "../api/apiInstance";
-import { FullItemSchema, PageSchema } from "../models";
+import { FullItemSchema, ItemQuerySchema, PageSchema } from "../models";
 
 export const useSearchStore = defineStore("searchStore", () => {
+    const searchNow = ref<boolean>(false);
     const page = ref<number>(1);
     const pages = ref<number>(Infinity);
-    const query = ref();
+    const query = ref<ItemQuerySchema>({});
     const items = ref<FullItemSchema[]>([]);
     const canLoadMore = computed(() => page.value <= pages.value);
     const loadMore = async () => {
@@ -24,8 +25,8 @@ export const useSearchStore = defineStore("searchStore", () => {
     const resetAll = () => {
         page.value = 1;
         pages.value = Infinity;
-        query.value = undefined;
+        query.value = {};
         items.value = [];
     }
-    return { page, pages, query, items, canLoadMore, loadMore, resetAll };
+    return { page, pages, query, items, canLoadMore, loadMore, resetAll, searchNow };
 });

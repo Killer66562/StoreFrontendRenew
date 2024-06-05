@@ -198,3 +198,9 @@ export interface AdSchema extends BaseSchema {
     url: string,
     icon: string | null
 }
+
+export interface ItemQuerySchema {
+    name?: string
+    order_by?: string
+    desc?: boolean
+}

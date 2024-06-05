@@ -5,9 +5,10 @@ import ItemCard from './ItemCard.vue';
 import { useIntersectionObserver } from '@vueuse/core';
 import TriState from './TriState.vue';
 
-defineProps<{
+const props = defineProps<{
     items: FullItemSchema[],
     canLoadMore: boolean,
+    paused?: boolean,
     loading: boolean,
     ready: boolean
     error: any
@@ -22,7 +23,7 @@ const emits = defineEmits<{
 useIntersectionObserver(
   target,
   ([{ isIntersecting }]) => {
-    if (isIntersecting === true)
+    if (isIntersecting === true && props.loading !== true)
         emits('loadMore');
   },
   {
