@@ -7,7 +7,10 @@ export const useSearchStore = defineStore("searchStore", () => {
     const searchNow = ref<boolean>(false);
     const page = ref<number>(1);
     const pages = ref<number>(Infinity);
-    const query = ref<ItemQuerySchema>({});
+    const query = ref<ItemQuerySchema>({
+        desc: false,
+        need18: false
+    });
     const items = ref<FullItemSchema[]>([]);
     const canLoadMore = computed(() => page.value <= pages.value);
     const loadMore = async () => {
@@ -25,7 +28,10 @@ export const useSearchStore = defineStore("searchStore", () => {
     const resetAll = () => {
         page.value = 1;
         pages.value = Infinity;
-        query.value = {};
+        query.value = {
+            desc: false,
+            need18: false
+        };
         items.value = [];
     }
     return { page, pages, query, items, canLoadMore, loadMore, resetAll, searchNow };

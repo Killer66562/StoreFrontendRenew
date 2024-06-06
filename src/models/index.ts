@@ -202,5 +202,11 @@ export interface AdSchema extends BaseSchema {
 export interface ItemQuerySchema {
     name?: string
     order_by?: string
-    desc?: boolean
+    desc: boolean
+    need18: boolean
+}
+
+export interface OptionValueText {
+    value: any
+    text: string
 }
