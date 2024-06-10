@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ItemQuerySchema, OptionValueText } from '../models';
 import { ref } from 'vue';
+import { useUserDataStore } from '../stores';
+
+const userStore = useUserDataStore();
 
 const props = defineProps<{
     query: ItemQuerySchema,
@@ -37,7 +40,7 @@ const queryNeed18Changed = () => {
             <label class="form-label">倒序</label>
             <input type="checkbox" class="form-check-input" v-model="queryDescRef" @change="queryDescChanged">
         </div>
-        <div class="me-3">
+        <div class="me-3" v-if="userStore.userData">
             <label class="form-label">顯示18禁商品</label>
             <input type="checkbox" class="form-check-input" v-model="queryNeed18Ref" @change="queryNeed18Changed">
         </div>

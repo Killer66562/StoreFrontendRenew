@@ -20,6 +20,7 @@ export interface UserSchema extends BaseSchema {
     birthday: Date
     is_admin: boolean,
     is_banned: boolean,
+    is_18: boolean,
     icon: string | null
 }
 

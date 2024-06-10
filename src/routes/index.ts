@@ -22,6 +22,15 @@ const routes: RouteRecordRaw[] = [
             }
         ]
     },
+    {
+        path: "/stores",
+        children: [
+            {
+                path: ":storeId",
+                component: () => import('../views/StorePage.vue')
+            }
+        ]
+    },
     /*
     {
         path: "/test",

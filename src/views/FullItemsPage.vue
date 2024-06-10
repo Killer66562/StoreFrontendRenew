@@ -77,13 +77,18 @@ const descChanged = async (desc: boolean) => {
     query.value.desc = desc;
     await anythingOnChanged();
 }
+
+const need18Changed = async (need18: boolean) => {
+    query.value.need18 = need18;
+    await anythingOnChanged();
+}
 </script>
 
 <template>
     <InitCheck>
         <template #ready>
             <h2 class="text-center">全站搜尋</h2>
-            <OrderByRow :query="searchStore.query" :opts="opts" @desc-changed="descChanged" :on-need18-changed="anythingOnChanged" @order-by-changed="orderByChanged"/>
+            <OrderByRow :query="searchStore.query" :opts="opts" @desc-changed="descChanged" :on-need18-changed="anythingOnChanged" @order-by-changed="orderByChanged" @need18-changed="need18Changed"/>
             <ItemCardAll :paused="searchNow" :items="data" :can-load-more="canLoadMore" :loading="searchState.isLoading.value" :ready="searchState.isReady.value" :error="searchState.error.value" @load-more="searchState.execute" />
         </template>
     </InitCheck>

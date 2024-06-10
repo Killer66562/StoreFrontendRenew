@@ -144,6 +144,10 @@ const onNotLogin = async () => {
                         <label class="form-label">商品數量</label>
                         <input min="1" class="form-control" type="number" v-model="data.count" required max="20000">
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">18禁商品</label>
+                        <input class="form-check-input" type="checkbox" v-model="data.need_18" required>
+                    </div>
                 </div>
                 <div class="col-12 col-md-8 mb-3">
                     <label class="form-label">商品介紹</label>

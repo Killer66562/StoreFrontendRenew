@@ -99,6 +99,20 @@ const fetchItem = async () => {
     }
 }
 
+const deleteItem = async () => {
+    if (router.currentRoute.value.params.itemId) {
+        const apiInstance = new ApiInstance();
+        try {
+            item.value = await apiInstance.delete(`/user/store/items/${router.currentRoute.value.params.itemId}`);
+            await router.replace("/user/store");
+            toast.success("成功下架商品");
+        }
+        catch (err) {
+            toast.error(getErrorMessage(err));
+        }
+    }
+}
+
 const fetchState = useAsyncState(() => fetchItem(), undefined, { immediate: false });
 
 const resetData = () => {
@@ -167,6 +181,10 @@ fetchState.execute(500);
                                 <label class="form-label">商品數量</label>
                                 <input min="1" class="form-control" type="number" v-model="data.count" required max="20000">
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">18禁商品</label>
+                                <input class="form-check-input" type="checkbox" v-model="data.need_18" required>
+                            </div>
                         </div>
                         <div class="col-12 col-md-8 mb-3">
                             <label class="form-label">商品介紹</label>
@@ -177,6 +195,7 @@ fetchState.execute(500);
                         <div class="btn-group">
                             <button type="submit" class="btn btn-success">點我更新商品</button>
                             <button type="reset" class="btn btn-danger">重新填寫</button>
+                            <button type="button" class="btn btn-secondary" @click="deleteItem">下架商品</button>
                         </div> 
                     </div>
                 </form>
