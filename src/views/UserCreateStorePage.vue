@@ -85,6 +85,10 @@ const sendData = async () => {
     try {
         await apiInstance.post("/user/store", data.value);
         try {
+            await apiInstance.put(`/user/store/icon`, { icon: data.value.icon });
+        }
+        catch (err) {}
+        try {
             await userStoreStore.fetchData();
         }
         catch (err) {}

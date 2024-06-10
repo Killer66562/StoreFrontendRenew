@@ -146,7 +146,7 @@ const onNotLogin = async () => {
                     </div>
                     <div class="mb-3">
                         <label class="form-label">18禁商品</label>
-                        <input class="form-check-input" type="checkbox" v-model="data.need_18" required>
+                        <input class="form-check-input" type="checkbox" v-model="data.need_18">
                     </div>
                 </div>
                 <div class="col-12 col-md-8 mb-3">
