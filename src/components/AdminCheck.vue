@@ -19,7 +19,7 @@ const emits = defineEmits<{
 }>();
 
 const notAdminHandler = async () => {
-    await router.replace("/404");
+    await router.replace("/");
 }
 
 const onIsLogin = async () => {
