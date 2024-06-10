@@ -78,6 +78,7 @@ const onIconChange = () => {
         else
             data.value.icon = null;
     }
+    console.log(data.value.icon);
 }
 
 const sendData = async () => {
@@ -85,7 +86,7 @@ const sendData = async () => {
     try {
         await apiInstance.post("/user/store", data.value);
         try {
-            await apiInstance.put(`/user/store/icon`, { icon: data.value.icon });
+            await apiInstance.putForm(`/user/store/icon`, { icon: data.value.icon });
         }
         catch (err) {}
         try {
