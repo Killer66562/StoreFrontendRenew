@@ -201,13 +201,19 @@ export interface AdSchema extends BaseSchema {
 }
 
 export interface ItemQuerySchema {
-    name?: string
-    order_by?: string
-    desc: boolean
+    name?: string,
+    order_by?: string,
+    desc: boolean,
     need18: boolean
 }
 
 export interface OptionValueText {
-    value: any
+    value: any,
     text: string
+}
+
+export interface ItemReportSchema extends CUItemReportSchema, BaseSchema {
+    reporter_id: number,
+    reporter: UserSchema,
+    reported_item: FullItemSchema
 }

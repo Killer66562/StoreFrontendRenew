@@ -125,6 +125,10 @@ const routes: RouteRecordRaw[] = [
             {
                 path: "users",
                 component: () => import('../views/AdminUsersPage.vue')
+            },
+            {
+                path: "item-reports",
+                component: () => import('../views/AdminItemReportsPage.vue')
             }
         ]
     },
