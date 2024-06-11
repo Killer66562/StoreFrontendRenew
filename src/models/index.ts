@@ -217,3 +217,11 @@ export interface ItemReportSchema extends CUItemReportSchema, BaseSchema {
     reporter: UserSchema,
     reported_item: FullItemSchema
 }
+
+export interface PasswordResetSchema {
+    email: string
+}
+
+export interface PasswordResetCodeSchema {
+    code: string
+}

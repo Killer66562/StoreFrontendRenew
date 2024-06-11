@@ -55,6 +55,14 @@ const routes: RouteRecordRaw[] = [
         component: () => import('../views/LoginPage.vue')
     },
     {
+        path: "/forget-password",
+        component: () => import('../views/PasswordResetPage.vue')
+    },
+    {
+        path: "/forget-password-confirm",
+        component: () => import('../views/PasswordResetCodeConfirmPage.vue')
+    },
+    {
         path: "/user",
         children: [
             {

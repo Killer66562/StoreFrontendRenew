@@ -64,6 +64,9 @@ const onIsLogin = async () => {
                         <div>
                             <RouterLink to="/register">尚無帳號？註冊</RouterLink>
                         </div>
+                        <div>
+                            <RouterLink to="/forget-password">忘記密碼？</RouterLink>
+                        </div>
                     </form>
                     <div>
                         <a href="https://ncuesaweb.ncue.edu.tw/linux"><img class="img-fluid h-100" src="/src/assets/linux.png" alt="ncuesa-linux-mirror"></a>
