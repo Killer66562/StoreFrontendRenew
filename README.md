@@ -1,9 +1,32 @@
-# Vue 3 + TypeScript + Vite
+# 購物網站前端
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## 安裝步驟
 
-## Recommended Setup
+### 開發
+1. 將`.env.example`複製成`.env`並修改參數
+2. 安裝依賴：
+    ```bash
+    npm install
+    ```
+3. 啟動前端開發伺服器：
+    ```bash
+    npm run dev
+    ```
+4. 啟動後端伺服器
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+### 部屬
+1. 將`.env.example`複製成`.env`並修改參數
+2. 安裝依賴：
+    ```bash
+    npm install
+    ```
+3. 建置：
+    ```bash
+    npm run build
+    ```
+4. 把`dist`資料夾裡面的東西複製到網頁伺服器根目錄底下
+5. 啟動後端伺服器
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+
+## 連結
+購物網站後端：https://github.com/Killer66562/StoreBackend
