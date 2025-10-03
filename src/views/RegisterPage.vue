@@ -74,9 +74,6 @@ const resetData = () => {
                             <RouterLink to="/login">已有帳號？登入</RouterLink>
                         </div>
                     </form>
-                    <div>
-                        <a href="https://ncuesaweb.ncue.edu.tw/linux"><img class="img-fluid h-100" src="/src/assets/linux.png" alt="ncuesa-linux-mirror"></a>
-                    </div>
                 </div> 
                 <div class="col-12 col-md-4"></div>
             </div>
