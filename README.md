@@ -2,6 +2,12 @@
 
 ## 安裝步驟
 
+### 前置動作
+```bash
+git clone https://github.com/Killer66562/StoreFrontendRenew.git
+cd StoreFrontendRenew
+```
+
 ### 開發
 1. 將`.env.example`複製成`.env`並修改參數
 2. 安裝依賴：
